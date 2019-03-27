@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ghostwhite"
+    tools:context="com.healthapp.ui.Profile.ProfileActivity">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guide1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".5" />
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardElevation="4dp"
+        card_view:layout_constraintBottom_toBottomOf="@id/guideline"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_22sdp"
+                android:src="@drawable/dectors"
+                app:civ_border_color="#5d81b1"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/cairo_bold"
+                android:gravity="center"
+                android:text="اسم المشرف هنا"
+                android:textColor="@color/darkcerulean"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+    <Button
+        android:id="@+id/ads_profile_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:background="@drawable/ads_profile_bac"
+        android:fontFamily="@font/cairo_bold"
+        android:gravity="center"
+        android:text="الزيارات السابقة"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guide1"
+        app:layout_constraintTop_toBottomOf="@id/card_view" />
+
+    <Button
+        android:id="@+id/order_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:background="#e6e6e9"
+        android:fontFamily="@font/cairo_bold"
+        android:gravity="center"
+        android:text="الزيارات السابقة"
+        android:textColor="@color/manatee"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintEnd_toStartOf="@id/guide1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_view" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_previous_visit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/previous_visit"
+        app:layout_constraintVertical_bias="0.0" />
+
+</android.support.constraint.ConstraintLayout>

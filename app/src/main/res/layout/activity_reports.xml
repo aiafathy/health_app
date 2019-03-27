@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.healthapp.ui.Reports.ReportsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_38sdp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginEnd="@dimen/_14sdp"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/logout"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/logout" />
+
+            <ImageButton
+                android:id="@+id/profile"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_weight="0.2"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/profile" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".6"
+                android:fontFamily="@font/cairo_light"
+                android:gravity="center"
+                android:text="        التقرير"
+                android:textColor="@color/skobeloff"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
+
+
+            <ImageButton
+                android:id="@+id/notification"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/notification" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tool_bar"
+        android:background="@drawable/background_app" />
+</RelativeLayout>
