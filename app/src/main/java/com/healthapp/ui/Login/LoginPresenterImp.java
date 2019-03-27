@@ -31,7 +31,7 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
     @Override
     public void login( String email, String pass ) {
         LoadingDialog.showProgress(context);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://39f543ea.ngrok.io/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://a09f9ac3.ngrok.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -43,7 +43,7 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
                     Log.i("login_api", "success");
                     String token = response.body().get("token").toString().replace("\"", "");
                     LoadingDialog.hideProgress();
-                    mView.goToHealthUnitDetails(token);
+                    mView.goToHealthUnitDetails(token, Integer.parseInt(response.body().getAsJsonObject("user").get("id").toString()));
                 } else {
                     Log.i("login_api", "not success");
                     LoadingDialog.hideProgress();
@@ -57,7 +57,6 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
                 if (t instanceof IOException) {
                     errorType = "Timeout";
                     errorDesc = String.valueOf(t.getMessage());
-                    Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
                 } else if (t instanceof IllegalStateException) {
                     errorType = "ConversionError";
                     errorDesc = String.valueOf(t.getMessage());

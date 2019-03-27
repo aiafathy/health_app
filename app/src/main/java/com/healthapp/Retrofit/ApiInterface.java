@@ -35,4 +35,6 @@ public interface ApiInterface {
     @GET("api/v1/user/details")
     Call<UserModel> getUserData();
 
+    @GET("api/v1/user/hostry/units/details/{id}")
+    Call<LastVisitsModel> getLastVisits( @Path("id") int userId );
 }

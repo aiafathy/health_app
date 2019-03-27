@@ -55,3 +55,6 @@
 -keep class com.google.gson.** { *; }
 
 -dontwarn com.google.errorprone.annotations.**
+
+-keep class com.wang.avi.** { *; }
+-keep class com.wang.avi.indicators.** { *; }

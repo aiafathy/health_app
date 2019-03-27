@@ -60,9 +60,10 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
     }
 
     @Override
-    public void goToHealthUnitDetails( String token ) {
+    public void goToHealthUnitDetails( String token, int userId ) {
         PreferencesHelperImp.getInstance().setUserIsLogged(true);
         PreferencesHelperImp.getInstance().setUserToken(token);
+        PreferencesHelperImp.getInstance().setUserId(userId);
         startActivity(new Intent(LoginActivity.this, HealthUnitDetails.class));
         finish();
     }
