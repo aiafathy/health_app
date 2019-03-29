@@ -39,11 +39,11 @@ public class HealthUnitDetailsImp implements IHealthUnitDetailsContract.Presente
         call.enqueue(new Callback<HealthUnitModel>() {
             @Override
             public void onResponse( Call<HealthUnitModel> call, Response<HealthUnitModel> response ) {
+                LoadingDialog.hideProgress();
                 if (response.isSuccessful()) {
                     HealthUnitModel healthUnitModel = response.body();
                     Log.i("town_api", "success");
                     Log.i("town_api_code", String.valueOf(healthUnitModel.getCode()));
-                    LoadingDialog.hideProgress();
                     if (healthUnitModel.getCode() == 200) {
                         Log.i("town_api", String.valueOf(healthUnitModel.getCode()) + ", " + healthUnitModel.getResponse().size());
                         if (healthUnitModel.getResponse().size() > 0)
@@ -52,7 +52,6 @@ public class HealthUnitDetailsImp implements IHealthUnitDetailsContract.Presente
 
                 } else {
                     Log.i("town_api", "not success");
-                    LoadingDialog.hideProgress();
                 }
 
             }

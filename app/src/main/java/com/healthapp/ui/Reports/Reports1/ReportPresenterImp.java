@@ -1,4 +1,4 @@
-package com.healthapp.ui.Profile;
+package com.healthapp.ui.Reports.Reports1;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,8 +6,8 @@ import android.widget.Toast;
 
 import com.healthapp.Prefs.PreferencesHelperImp;
 import com.healthapp.Retrofit.ApiInterface;
-import com.healthapp.Retrofit.HealthUnitModel;
-import com.healthapp.Retrofit.LastVisitsModel;
+import com.healthapp.Retrofit.FormTypesModel;
+import com.healthapp.Retrofit.NoDetailsModel;
 import com.healthapp.Retrofit.RetrofitInstance;
 import com.healthapp.Retrofit.UserModel;
 import com.healthapp.ui.LoadingDialog;
@@ -18,40 +18,43 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfilePresenterImp implements IProfileContract.Presenter {
 
-    IProfileContract.View mView;
+public class ReportPresenterImp implements IReportContract.Presenter {
+    IReportContract.View mView;
     Context context;
     private String errorType;
     private String errorDesc;
 
-    public ProfilePresenterImp( IProfileContract.View mView, Context context ) {
+    public ReportPresenterImp( IReportContract.View mView, Context context ) {
         this.mView = mView;
         this.context = context;
     }
 
     @Override
-    public void getUserData() {
+    public void getFormsType() {
+        LoadingDialog.showProgress(context);
         ApiInterface apiInterface = RetrofitInstance.getRetrofit().create(ApiInterface.class);
-        Log.i("token_user", PreferencesHelperImp.getInstance().getUserToken());
-        Call<UserModel> call = apiInterface.getUserData();
-        call.enqueue(new Callback<UserModel>() {
+        Call<FormTypesModel> call = apiInterface.getAllFormTypes();
+        call.enqueue(new Callback<FormTypesModel>() {
             @Override
-            public void onResponse( Call<UserModel> call, Response<UserModel> response ) {
+            public void onResponse( Call<FormTypesModel> call, Response<FormTypesModel> response ) {
+                LoadingDialog.hideProgress();
                 if (response.isSuccessful()) {
-                    UserModel userModel = response.body();
-                    Log.i("user_data_api", "success");
-                    mView.showName(userModel.getUser().getName());
+                    FormTypesModel formTypesModel = response.body();
+                    Log.i("forms_type_api", "success");
+                    if (formTypesModel.getResponse().size() > 0)
+                        mView.showFormsType(formTypesModel.getResponse());
 
                 } else {
-                    Log.i("user_data_api", "not success");
+                    Log.i("forms_type_api", "not success");
                 }
 
             }
 
             @Override
-            public void onFailure( Call<UserModel> call, Throwable t ) {
-                Log.i("user_data_api", "failure" + t.getMessage());
+            public void onFailure( Call<FormTypesModel> call, Throwable t ) {
+                Log.i("forms_type_api", "failure" + t.getMessage());
+                LoadingDialog.hideProgress();
                 if (t instanceof IOException) {
                     errorType = "Timeout";
                     errorDesc = String.valueOf(t.getMessage());
@@ -63,36 +66,34 @@ public class ProfilePresenterImp implements IProfileContract.Presenter {
                     errorType = "Other Error";
                     errorDesc = String.valueOf(t.getLocalizedMessage());
                 }
-                Log.i("user_data_api", "failure with error : " + errorType + " ," + errorDesc);
+                Log.i("forms_type_api", "failure with error : " + errorType + " ," + errorDesc);
             }
-
         });
 
     }
 
     @Override
-    public void getUserVisits( int userId ) {
-        LoadingDialog.showProgress(context);
+    public void getNoDetailsList() {
         ApiInterface apiInterface = RetrofitInstance.getRetrofit().create(ApiInterface.class);
-        Call<LastVisitsModel> call = apiInterface.getLastVisits(userId);
-        call.enqueue(new Callback<LastVisitsModel>() {
+        Call<NoDetailsModel> call = apiInterface.getNoDetailsList();
+        call.enqueue(new Callback<NoDetailsModel>() {
             @Override
-            public void onResponse( Call<LastVisitsModel> call, Response<LastVisitsModel> response ) {
-                LoadingDialog.hideProgress();
+            public void onResponse( Call<NoDetailsModel> call, Response<NoDetailsModel> response ) {
                 if (response.isSuccessful()) {
-                    LastVisitsModel lastVisitsModel = response.body();
-                    Log.i("last_visits_api", "success");
-                    if (lastVisitsModel.getResponse().size() > 0)
-                        mView.showUserVisitsList(lastVisitsModel.getResponse());
+                    NoDetailsModel noDetailsModel = response.body();
+                    Log.i("no_details_api", "success");
+                    if (noDetailsModel.getResponse().size() > 0)
+                        mView.showNoDetailsList(noDetailsModel.getResponse());
+
                 } else {
-                    Log.i("last_visits_api", "not success");
+                    Log.i("no_details_api", "not success");
                 }
+
             }
 
             @Override
-            public void onFailure( Call<LastVisitsModel> call, Throwable t ) {
-                Log.i("last_visits_api", "failure" + t.getMessage());
-                LoadingDialog.hideProgress();
+            public void onFailure( Call<NoDetailsModel> call, Throwable t ) {
+                Log.i("no_details_api", "failure" + t.getMessage());
                 if (t instanceof IOException) {
                     errorType = "Timeout";
                     errorDesc = String.valueOf(t.getMessage());
@@ -104,9 +105,9 @@ public class ProfilePresenterImp implements IProfileContract.Presenter {
                     errorType = "Other Error";
                     errorDesc = String.valueOf(t.getLocalizedMessage());
                 }
-                Log.i("last_visits_api", "failure with error : " + errorType + " ," + errorDesc);
+                Log.i("no_details_api", "failure with error : " + errorType + " ," + errorDesc);
             }
-
         });
+
     }
 }

@@ -39,7 +39,8 @@
 -keepclasseswithmembers class * {
     @retrofit.http.* <methods>;
 }
-
+-keep class com.wang.avi.** { *; }
+-dontwarn com.wang.avi.**
 # Platform calls Class.forName on types which do not exist on Android to determine platform.
 -dontnote retrofit2.Platform
 # Platform used when running on RoboVM on iOS. Will not be used at runtime.
@@ -51,10 +52,12 @@
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
 -keepattributes *Annotation*
-#-keep class com.meatshop.admin.data.remote.Retrofit.** {*;}
+-keep class com.healthapp.Retrofit.** {*;}
 -keep class com.google.gson.** { *; }
 
 -dontwarn com.google.errorprone.annotations.**
 
--keep class com.wang.avi.** { *; }
--keep class com.wang.avi.indicators.** { *; }
+-dontwarn androidx.**
+-keep class androidx.** { *; }
+-keep interface androidx.** { *; }
+-keep class android.support.v7.widget.** { *; }

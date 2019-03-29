@@ -15,7 +15,7 @@
         android:gravity="center"
         android:padding="@dimen/_4sdp"
         android:text="من فضلك حدد نوع التقرير أولا "
-        android:textColor="@color/white"
+        android:textColor="@color/greenblue"
         android:textSize="@dimen/_11ssp" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_marginEnd="@dimen/_12sdp"
         android:fontFamily="@font/cairo_bold"
         android:text="نوع التقرير"
-        android:textColor="@color/white"
+        android:textColor="@color/greenblue"
         android:textSize="@dimen/_11ssp" />
 
     <com.reginald.editspinner.EditSpinner
@@ -42,7 +42,7 @@
         android:drawableStart="@drawable/arrow"
         android:editable="false"
         android:fontFamily="@font/cairo_bold"
-        android:hint=" تقرير   أ"
+        android:hint="نوع التقرير هنا "
         android:paddingStart="@dimen/_6sdp"
         android:paddingEnd="@dimen/_8sdp"
         android:textColor="@color/greenblue"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/spinner_report_type"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:orientation="vertical" />
 
 </RelativeLayout>

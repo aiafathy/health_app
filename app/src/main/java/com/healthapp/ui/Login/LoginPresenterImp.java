@@ -31,7 +31,7 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
     @Override
     public void login( String email, String pass ) {
         LoadingDialog.showProgress(context);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://a09f9ac3.ngrok.io/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://4454c430.ngrok.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -39,10 +39,10 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse( Call<JsonObject> call, Response<JsonObject> response ) {
+                LoadingDialog.hideProgress();
                 if (response.isSuccessful()) {
                     Log.i("login_api", "success");
                     String token = response.body().get("token").toString().replace("\"", "");
-                    LoadingDialog.hideProgress();
                     mView.goToHealthUnitDetails(token, Integer.parseInt(response.body().getAsJsonObject("user").get("id").toString()));
                 } else {
                     Log.i("login_api", "not success");
