@@ -31,7 +31,7 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
     @Override
     public void login( String email, String pass ) {
         LoadingDialog.showProgress(context);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://4454c430.ngrok.io/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://4c2fec04.ngrok.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);

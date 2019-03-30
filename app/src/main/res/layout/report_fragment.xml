@@ -58,8 +58,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/spinner_report_type"
-        android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/_6sdp"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_2sdp" />
+
 
 </RelativeLayout>

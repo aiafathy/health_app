@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HealthApp</string>
+    <string name="tile_feedback">من فضلك قيم التطبيق</string>
+    <string name="des_feedback">description</string>
+    <string name="review">How useful our application was</string>
+    <string name="pos_feedback">ممتاز</string>
+    <string name="neg_feedback">سيء</string>
+    <string name="semi_feedback">جيد</string>
 </resources>

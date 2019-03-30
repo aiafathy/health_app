@@ -1,4 +1,4 @@
-package com.healthapp.ui.Profile;
+package com.healthapp.ui.Profile.ProfileFragment;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,11 +6,13 @@ import android.widget.Toast;
 
 import com.healthapp.Prefs.PreferencesHelperImp;
 import com.healthapp.Retrofit.ApiInterface;
-import com.healthapp.Retrofit.HealthUnitModel;
+import com.healthapp.Retrofit.LastVisitsDetailsModel;
+import com.healthapp.Retrofit.LastVisitsFormTypeModel;
 import com.healthapp.Retrofit.LastVisitsModel;
 import com.healthapp.Retrofit.RetrofitInstance;
 import com.healthapp.Retrofit.UserModel;
 import com.healthapp.ui.LoadingDialog;
+import com.healthapp.ui.Profile.ProfileFragment.IProfileContract;
 
 import java.io.IOException;
 

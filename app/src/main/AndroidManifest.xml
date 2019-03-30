@@ -15,28 +15,28 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="supportsRtl">
-        <activity android:name="com.healthapp.ui.Login.LoginActivity" />
-        <activity android:name="com.healthapp.ui.HealthUnitDetails.HealthUnitDetails">
+        <activity android:name=".ui.Login.LoginActivity" />
+        <activity android:name=".ui.HealthUnitDetails.HealthUnitDetails" />
+        <activity android:name=".ui.Reports.ReportsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.healthapp.ui.Reports.ReportsActivity" />
-        <activity android:name="com.healthapp.ui.Profile.ProfileActivity"></activity>
-
+        <activity android:name=".ui.Profile.ProfileActivity" />
 
         <service android:name=".FCM.MyFirebaseInstanceService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".FCM.MyFirebaseMessangingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
     </application>
 
 </manifest>

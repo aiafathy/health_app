@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.healthapp.ui.Reports.ReportsActivity">
 
     <android.support.v7.widget.Toolbar
@@ -72,6 +73,24 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tool_bar"
-        android:background="@color/white" />
+        android:layout_above="@id/button_send"
+        android:layout_below="@id/tool_bar" />
+
+    <Button
+        android:id="@+id/button_send"
+        android:layout_width="@dimen/_230sdp"
+        android:layout_height="@dimen/_38sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:background="@drawable/background_next"
+        android:fontFamily="@font/cairo_bold"
+        android:gravity="center"
+        android:paddingBottom="@dimen/_8sdp"
+        android:text="send"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold" />
 </RelativeLayout>
+

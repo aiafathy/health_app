@@ -29,6 +29,12 @@ public interface ApiInterface {
     @GET("api/v1/user/hostry/units/details/{id}")
     Call<LastVisitsModel> getLastVisits( @Path("id") int userId );
 
+    @GET("api/v1/user/hostry/forms/details/{id}")
+    Call<LastVisitsFormTypeModel> getLastVisitsFormType( @Path("id") int unit_id );
+
+    @GET("api/v1/user/hostry/questions/details/{id}")
+    Call<LastVisitsDetailsModel> getLastVisitsDetails( @Path("id") int form_id );
+
     @GET("api/v1/forms/details")
     Call<FormTypesModel> getAllFormTypes();
 

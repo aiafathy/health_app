@@ -1,4 +1,4 @@
-package com.healthapp.ui.Profile;
+package com.healthapp.ui.Profile.ProfileFragment;
 
 import com.healthapp.Retrofit.LastVisits;
 
@@ -10,6 +10,7 @@ public interface IProfileContract {
         void showName( String name );
 
         void showUserVisitsList( List<LastVisits> lastVisitsList );
+
     }
 
     interface Presenter {
