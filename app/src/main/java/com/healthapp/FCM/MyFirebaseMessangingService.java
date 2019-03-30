@@ -25,7 +25,6 @@ public class MyFirebaseMessangingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
-        Log.i("message", remoteMessage.getNotification().getBody());
     }
 
     public void sendNotification( String title, String message ) {

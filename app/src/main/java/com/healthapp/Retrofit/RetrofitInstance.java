@@ -29,8 +29,6 @@ public class RetrofitInstance {
                             @Override
                             public Response intercept( Chain chain ) throws IOException {
                                 Request request = null;
-                                Log.d("--Authorization-- ", "Bearer " + PreferencesHelperImp.getInstance().getUserToken());
-
                                 Request original = chain.request();
                                 // Request customization: add request headers
                                 Request.Builder requestBuilder = original.newBuilder()
@@ -49,7 +47,7 @@ public class RetrofitInstance {
 
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
-            retrofit = new Retrofit.Builder().baseUrl("https://4c2fec04.ngrok.io/")
+            retrofit = new Retrofit.Builder().baseUrl("https://e49a2dc8.ngrok.io/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getHeader())
                     .build();

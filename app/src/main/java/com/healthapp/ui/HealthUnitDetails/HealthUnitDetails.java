@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +27,7 @@ import com.reginald.editspinner.EditSpinner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitDetailsContract.View {
+public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitDetailsContract.View, AdapterView.OnItemClickListener, View.OnTouchListener {
 
     EditSpinner spinnerTown, spinnerManagement, spinnerUnit;
     List<String> townListString, managementListString, unitListString;
@@ -54,7 +55,6 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
         managementList = new ArrayList<>();
         unitList = new ArrayList<>();
         healthUnitDetailsImp = new HealthUnitDetailsImp(this, HealthUnitDetails.this);
-        healthUnitDetailsImp.getTownList();
     }
 
     private void setListener() {
@@ -68,23 +68,9 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
                 }
             }
         });
-
-        spinnerTown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
-                int idTown = townList.get(i).getId();
-                healthUnitDetailsImp.getManagementList(idTown);
-            }
-        });
-
-        spinnerManagement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
-                int idManagement = managementList.get(i).getId();
-                healthUnitDetailsImp.getUnitsList(idManagement);
-            }
-        });
-
+        spinnerTown.setOnTouchListener(this);
+        spinnerTown.setOnItemClickListener(this);
+        spinnerManagement.setOnItemClickListener(this);
     }
 
     private void initiViews() {
@@ -155,5 +141,28 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
+    public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
+        switch (view.getId()) {
+            case R.id.spinner_twon:
+                int idTown = townList.get(i).getId();
+                healthUnitDetailsImp.getManagementList(idTown);
+                break;
+
+            case R.id.spinner_management:
+                int idManagement = managementList.get(i).getId();
+                healthUnitDetailsImp.getUnitsList(idManagement);
+                break;
+        }
+    }
+
+    @Override
+    public boolean onTouch( View view, MotionEvent event ) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            healthUnitDetailsImp.getTownList();
+        }
+        return true;
     }
 }

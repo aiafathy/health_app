@@ -18,8 +18,6 @@ import retrofit2.Response;
 public class AllVisitsFormTypePresenterImp implements IAllVisitsFormTypeContract.Presenter {
     Context context;
     IAllVisitsFormTypeContract.View mView;
-    private String errorType;
-    private String errorDesc;
 
     public AllVisitsFormTypePresenterImp( Context context, IAllVisitsFormTypeContract.View mView ) {
         this.context = context;
@@ -37,30 +35,15 @@ public class AllVisitsFormTypePresenterImp implements IAllVisitsFormTypeContract
                 LoadingDialog.hideProgress();
                 if (response.isSuccessful()) {
                     LastVisitsFormTypeModel lastVisitsFormTypeModel = response.body();
-                    Log.i("lastVisitsFormType_api", "success");
                     if (lastVisitsFormTypeModel.getResponse().size() > 0)
                         mView.showUserVisitsFormTypeList(lastVisitsFormTypeModel.getResponse());
-                } else {
-                    Log.i("lastVisitsFormType_api", "not success");
                 }
             }
 
             @Override
             public void onFailure( Call<LastVisitsFormTypeModel> call, Throwable t ) {
-                Log.i("lastVisitsFormType_api", "failure" + t.getMessage());
                 LoadingDialog.hideProgress();
-                if (t instanceof IOException) {
-                    errorType = "Timeout";
-                    errorDesc = String.valueOf(t.getMessage());
-                    Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
-                } else if (t instanceof IllegalStateException) {
-                    errorType = "ConversionError";
-                    errorDesc = String.valueOf(t.getMessage());
-                } else {
-                    errorType = "Other Error";
-                    errorDesc = String.valueOf(t.getLocalizedMessage());
-                }
-                Log.i("lastVisitsFormType_api", "failure with error : " + errorType + " ," + errorDesc);
+                Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
             }
 
         });

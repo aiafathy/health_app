@@ -50,8 +50,7 @@ public class FeedbackDialog extends Dialog implements
         good = findViewById(R.id.good_dialog);
         bad = findViewById(R.id.bad_dialog);
 
-        title.setText("تقييم التطبيق");
-        question.setText("من فضلك قيم التطبيق أولا");
+        title.setText("من فضلك قيم زياراتك للوحدة الصحية");
         veryGood.setText("ممتاز");
         good.setText("جيد");
         bad.setText("سيء");

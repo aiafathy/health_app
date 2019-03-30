@@ -22,8 +22,6 @@ import retrofit2.Response;
 public class ReportPresenterImp implements IReportContract.Presenter {
     IReportContract.View mView;
     Context context;
-    private String errorType;
-    private String errorDesc;
 
     public ReportPresenterImp( IReportContract.View mView, Context context ) {
         this.mView = mView;
@@ -41,32 +39,16 @@ public class ReportPresenterImp implements IReportContract.Presenter {
                 LoadingDialog.hideProgress();
                 if (response.isSuccessful()) {
                     FormTypesModel formTypesModel = response.body();
-                    Log.i("forms_type_api", "success");
                     if (formTypesModel.getResponse().size() > 0)
                         mView.showFormsType(formTypesModel.getResponse());
 
-                } else {
-                    Log.i("forms_type_api", "not success");
                 }
-
             }
 
             @Override
             public void onFailure( Call<FormTypesModel> call, Throwable t ) {
-                Log.i("forms_type_api", "failure" + t.getMessage());
                 LoadingDialog.hideProgress();
-                if (t instanceof IOException) {
-                    errorType = "Timeout";
-                    errorDesc = String.valueOf(t.getMessage());
-                    Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
-                } else if (t instanceof IllegalStateException) {
-                    errorType = "ConversionError";
-                    errorDesc = String.valueOf(t.getMessage());
-                } else {
-                    errorType = "Other Error";
-                    errorDesc = String.valueOf(t.getLocalizedMessage());
-                }
-                Log.i("forms_type_api", "failure with error : " + errorType + " ," + errorDesc);
+                Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -81,33 +63,16 @@ public class ReportPresenterImp implements IReportContract.Presenter {
             public void onResponse( Call<NoDetailsModel> call, Response<NoDetailsModel> response ) {
                 if (response.isSuccessful()) {
                     NoDetailsModel noDetailsModel = response.body();
-                    Log.i("no_details_api", "success");
                     if (noDetailsModel.getResponse().size() > 0)
                         mView.showNoDetailsList(noDetailsModel.getResponse());
-
-                } else {
-                    Log.i("no_details_api", "not success");
                 }
-
             }
 
             @Override
             public void onFailure( Call<NoDetailsModel> call, Throwable t ) {
-                Log.i("no_details_api", "failure" + t.getMessage());
-                if (t instanceof IOException) {
-                    errorType = "Timeout";
-                    errorDesc = String.valueOf(t.getMessage());
-                    Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
-                } else if (t instanceof IllegalStateException) {
-                    errorType = "ConversionError";
-                    errorDesc = String.valueOf(t.getMessage());
-                } else {
-                    errorType = "Other Error";
-                    errorDesc = String.valueOf(t.getLocalizedMessage());
-                }
-                Log.i("no_details_api", "failure with error : " + errorType + " ," + errorDesc);
+
             }
         });
-
     }
 }
+
