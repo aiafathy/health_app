@@ -17,7 +17,7 @@ public class FeedbackDialog extends Dialog implements
     public Activity activity;
     public Dialog dialog;
     LinearLayout verygood_feedback_layout, good_feedback_layout, bad_feedback_lLayout;
-    TextView title, question, veryGood, good, bad;
+    TextView  question, veryGood, good, bad;
 
     public FeedbackDialog( Activity activity ) {
         super(activity);
@@ -43,14 +43,14 @@ public class FeedbackDialog extends Dialog implements
         good_feedback_layout = findViewById(R.id.negative_feedback_layout);
         bad_feedback_lLayout = findViewById(R.id.ambiguity_feedback_layout);
 
-        title = findViewById(R.id.title_dialog);
+
         question = findViewById(R.id.question_dialog);
 
         veryGood = findViewById(R.id.very_good_dialog);
         good = findViewById(R.id.good_dialog);
         bad = findViewById(R.id.bad_dialog);
 
-        title.setText("من فضلك قيم زياراتك للوحدة الصحية");
+        question.setText("من فضلك قيم زياراتك للوحدة الصحية");
         veryGood.setText("ممتاز");
         good.setText("جيد");
         bad.setText("سيء");

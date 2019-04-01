@@ -27,13 +27,13 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
     }
 
     @Override
-    public void login( String email, String pass ) {
+    public void login( String email, String pass, String device_token ) {
         LoadingDialog.showProgress(context);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://e49a2dc8.ngrok.io/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://b223446f.ngrok.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<JsonObject> call = apiInterface.loginUser(email, pass);
+        Call<JsonObject> call = apiInterface.loginUser(email, pass, device_token);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse( Call<JsonObject> call, Response<JsonObject> response ) {

@@ -1,5 +1,6 @@
 package com.healthapp.ui.Reports.Reports1;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,6 +17,7 @@ import android.widget.ArrayAdapter;
 import com.healthapp.R;
 import com.healthapp.Retrofit.FormTypes;
 import com.healthapp.Retrofit.NoDetails;
+import com.healthapp.Retrofit.Questions;
 import com.healthapp.ui.Reports.ReportAdapter;
 import com.reginald.editspinner.EditSpinner;
 
@@ -29,7 +32,8 @@ public class Reports1Fragment extends Fragment implements IReportContract.View, 
     List<FormTypes> formsTypeList;
     List<String> noDetailsListStrings;
     List<NoDetails> noDetailsList;
-    List<String> questionsList;
+    List<String> questionsListStrings;
+    List<Questions> questionsList;
     String idNoAnswer = null;
     ReportPresenterImp reportPresenterImp;
 
@@ -60,18 +64,31 @@ public class Reports1Fragment extends Fragment implements IReportContract.View, 
         questionsList = new ArrayList<>();
         noDetailsList = new ArrayList<>();
         noDetailsListStrings = new ArrayList<>();
+        questionsListStrings = new ArrayList<>();
         reportPresenterImp = new ReportPresenterImp(this, getActivity());
         reportPresenterImp.getNoDetailsList();
-        reportPresenterImp.getFormsType();
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setUpListeners() {
 
         formsTypeSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
                 int idFormType = formsTypeList.get(i).getId();
+                reportPresenterImp.getAllQuestions(idFormType);
+            }
+        });
+
+        formsTypeSpinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch( View view, MotionEvent event ) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (formsTypeList.size() == 0)
+                        reportPresenterImp.getFormsType();
+                }
+                return false;
             }
         });
     }
@@ -79,6 +96,10 @@ public class Reports1Fragment extends Fragment implements IReportContract.View, 
 
     @Override
     public void showFormsType( List<FormTypes> formsTypesList ) {
+        // to clear list when user try to get data again
+        this.formsTypeList.clear();
+        this.formsTypeListStrings.clear();
+
         this.formsTypeList = formsTypesList;
         for (int i = 0; i < formsTypesList.size(); i++) {
             formsTypeListStrings.add(formsTypesList.get(i).getName());
@@ -98,30 +119,27 @@ public class Reports1Fragment extends Fragment implements IReportContract.View, 
 
         reportAdapter = new ReportAdapter(noDetailsListStrings, this, getActivity());
 
-
-        // for test
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        questionsList.add("هل يوجد مطفأة حرائق ؟ ");
-        reportAdapter.setQuestionsList(questionsList);
-
-
-
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        questionRecyclerView.setLayoutManager(manager);
-        questionRecyclerView.setAdapter(reportAdapter);
     }
 
     @Override
     public void onSpinnerClick( int pos ) {
         idNoAnswer = String.valueOf(noDetailsList.get(pos).getId());
+    }
+
+    @Override
+    public void showAllQuestions( List<Questions> questionsList ) {
+        // to clear list when user try to get data again
+        this.questionsList.clear();
+        this.questionsListStrings.clear();
+
+        this.questionsList = questionsList;
+        for (int i = 0; i < questionsList.size(); i++) {
+            questionsListStrings.add(questionsList.get(i).getName());
+        }
+
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        questionRecyclerView.setLayoutManager(manager);
+        reportAdapter.setQuestionsList(questionsListStrings);
+        questionRecyclerView.setAdapter(reportAdapter);
     }
 }

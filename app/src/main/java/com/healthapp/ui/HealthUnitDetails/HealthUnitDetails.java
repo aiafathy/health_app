@@ -1,5 +1,6 @@
 package com.healthapp.ui.HealthUnitDetails;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,14 +28,14 @@ import com.reginald.editspinner.EditSpinner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitDetailsContract.View, AdapterView.OnItemClickListener, View.OnTouchListener {
+public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitDetailsContract.View {
 
     EditSpinner spinnerTown, spinnerManagement, spinnerUnit;
     List<String> townListString, managementListString, unitListString;
     List<HealthUnit> townList, managementList, unitList;
     Button next;
     HealthUnitDetailsImp healthUnitDetailsImp;
-    private BroadcastReceiver broadcastReceiver;
+    int idTown, idManagement;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -44,7 +45,6 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
         initiViews();
         getInstances();
         setListener();
-        setUpFCM();
     }
 
     private void getInstances() {
@@ -57,7 +57,9 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
         healthUnitDetailsImp = new HealthUnitDetailsImp(this, HealthUnitDetails.this);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setListener() {
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View view ) {
@@ -68,9 +70,59 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
                 }
             }
         });
-        spinnerTown.setOnTouchListener(this);
-        spinnerTown.setOnItemClickListener(this);
-        spinnerManagement.setOnItemClickListener(this);
+
+
+        spinnerTown.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch( View view, MotionEvent event ) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (townList.size() == 0)
+                        healthUnitDetailsImp.getTownList();
+                }
+
+                return false;
+            }
+        });
+
+        spinnerManagement.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch( View view, MotionEvent event ) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (managementList.size() == 0)
+                        healthUnitDetailsImp.getManagementList(idTown);
+                }
+                return false;
+            }
+        });
+
+        spinnerUnit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch( View view, MotionEvent event ) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (unitList.size() == 0)
+                        healthUnitDetailsImp.getUnitsList(idManagement);
+                }
+
+                return false;
+            }
+        });
+
+
+        spinnerTown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
+                idTown = townList.get(i).getId();
+                healthUnitDetailsImp.getManagementList(idTown);
+
+            }
+        });
+        spinnerManagement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
+                idManagement = managementList.get(i).getId();
+                healthUnitDetailsImp.getUnitsList(idManagement);
+            }
+        });
     }
 
     private void initiViews() {
@@ -82,9 +134,14 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
 
     @Override
     public void showTownList( List<HealthUnit> townList ) {
+        // to clear list when user try to get data again
+        this.townList.clear();
+        this.townListString.clear();
+
         this.townList = townList;
         for (int i = 0; i < townList.size(); i++) {
             townListString.add(townList.get(i).getName());
+
         }
 
         ArrayAdapter<String> townAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, townListString);
@@ -93,6 +150,10 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
 
     @Override
     public void showManagementList( List<HealthUnit> managementList ) {
+        // to clear list when user try to get data again
+        this.managementList.clear();
+        this.managementListString.clear();
+
         this.managementList = managementList;
         for (int i = 0; i < managementList.size(); i++) {
             managementListString.add(managementList.get(i).getName());
@@ -105,6 +166,10 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
 
     @Override
     public void showUnitsList( List<HealthUnit> unitList ) {
+        // to clear list when user try to get data again
+        this.unitList.clear();
+        this.unitListString.clear();
+
         this.unitList = unitList;
         for (int i = 0; i < unitList.size(); i++) {
             unitListString.add(unitList.get(i).getName());
@@ -112,57 +177,5 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
 
         ArrayAdapter<String> unitAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, unitListString);
         spinnerUnit.setAdapter(unitAdapter);
-    }
-
-
-    // for FCM
-
-    private void setUpFCM() {
-        broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive( Context context, Intent intent ) {
-                if (intent.getAction().equals("fcm_intent")) {
-                    Log.i("fcm_token", "token: " + intent.getExtras().getString("token"));
-                    FirebaseMessaging.getInstance().subscribeToTopic("Global");
-                }
-            }
-        };
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
-                new IntentFilter("reg_id"));
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
-    }
-
-    @Override
-    public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
-        switch (view.getId()) {
-            case R.id.spinner_twon:
-                int idTown = townList.get(i).getId();
-                healthUnitDetailsImp.getManagementList(idTown);
-                break;
-
-            case R.id.spinner_management:
-                int idManagement = managementList.get(i).getId();
-                healthUnitDetailsImp.getUnitsList(idManagement);
-                break;
-        }
-    }
-
-    @Override
-    public boolean onTouch( View view, MotionEvent event ) {
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            healthUnitDetailsImp.getTownList();
-        }
-        return true;
     }
 }

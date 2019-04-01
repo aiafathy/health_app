@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 public interface ApiInterface {
 
     @POST("api/v1/user/login")
-    Call<JsonObject> loginUser( @Query("email") String email, @Query("password") String password );
+    Call<JsonObject> loginUser( @Query("email") String email, @Query("password") String password, @Query("device_token") String device_token );
 
 
     @GET("api/v1/governorates/details")
@@ -22,6 +22,7 @@ public interface ApiInterface {
 
     @GET("api/v1/units/details/{id}")
     Call<HealthUnitModel> getUnits( @Path("id") int id );
+
 
     @GET("api/v1/user/details")
     Call<UserModel> getUserData();
@@ -35,9 +36,13 @@ public interface ApiInterface {
     @GET("api/v1/user/hostry/questions/details/{id}")
     Call<LastVisitsDetailsModel> getLastVisitsDetails( @Path("id") int form_id );
 
+
     @GET("api/v1/forms/details")
     Call<FormTypesModel> getAllFormTypes();
 
     @GET("api/v1/answer/no/details")
     Call<NoDetailsModel> getNoDetailsList();
+
+    @GET("api/v1/questions/details/{id}")
+    Call<QuestionModel> getAllQuestions( @Path("id") int id_forms );
 }

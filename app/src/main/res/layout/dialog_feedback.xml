@@ -12,7 +12,7 @@
         <RelativeLayout
             android:id="@+id/semi_trans"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="70dp"
             android:background="@color/white">
 
         </RelativeLayout>
@@ -28,40 +28,32 @@
                 android:id="@+id/feedback_body_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="100dp"
                 android:orientation="vertical"
                 android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/title_dialog"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center"
-                    android:textColor="@color/greenblue"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/question_dialog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="@dimen/_16sdp"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
         </RelativeLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/review_icon"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_130sdp"
             android:layout_above="@+id/dialog_body"
+            android:scaleType="centerCrop"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginBottom="-20dp"
             android:src="@drawable/dectors" />
 
     </RelativeLayout>

@@ -1,13 +1,19 @@
 package com.healthapp.ui.Login;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.healthapp.Prefs.PreferencesHelper;
 import com.healthapp.Prefs.PreferencesHelperImp;
 import com.healthapp.R;
@@ -19,6 +25,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
     Button login;
     EditSpinner emailEdit, passwordEdit;
     LoginPresenterImp loginPresenterImp;
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -27,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
 
         initiViews();
         createInstance();
+        setUpFCM();
         setListener();
     }
 
@@ -38,12 +46,14 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View view ) {
-
+                String fcm_token = null;
                 String emailUser = emailEdit.getText().toString();
                 String passwordUser = passwordEdit.getText().toString();
-                if (!emailUser.isEmpty() && !passwordUser.isEmpty()) {
-                    //TODO fcm token from FCM
-                    loginPresenterImp.login(emailUser, passwordUser);
+                Log.i("fcm_token", PreferencesHelperImp.getInstance().getFcmToken());
+                fcm_token = PreferencesHelperImp.getInstance().getFcmToken();
+                if (!emailUser.isEmpty() && !passwordUser.isEmpty() && fcm_token != null) {
+
+                    loginPresenterImp.login(emailUser, passwordUser, PreferencesHelperImp.getInstance().getFcmToken());
                 } else {
                     Toast.makeText(LoginActivity.this, "من فضلك ادخل بريدك الالكتروني وكلمة السر", Toast.LENGTH_SHORT).show();
                 }
@@ -59,6 +69,20 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
         passwordEdit = findViewById(R.id.edit_pass);
     }
 
+    // for FCM
+
+    private void setUpFCM() {
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive( Context context, Intent intent ) {
+                if (intent.getAction().equals("fcm_intent")) {
+                    Log.i("fcm_token", "token: " + intent.getExtras().getString("token"));
+                    FirebaseMessaging.getInstance().subscribeToTopic("Global");
+                }
+            }
+        };
+    }
+
     @Override
     public void goToHealthUnitDetails( String token, int userId ) {
         PreferencesHelperImp.getInstance().setUserIsLogged(true);
@@ -68,5 +92,16 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
         finish();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
+                new IntentFilter("reg_id"));
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+    }
 }

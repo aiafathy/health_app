@@ -8,6 +8,7 @@ import com.healthapp.Prefs.PreferencesHelperImp;
 import com.healthapp.Retrofit.ApiInterface;
 import com.healthapp.Retrofit.FormTypesModel;
 import com.healthapp.Retrofit.NoDetailsModel;
+import com.healthapp.Retrofit.QuestionModel;
 import com.healthapp.Retrofit.RetrofitInstance;
 import com.healthapp.Retrofit.UserModel;
 import com.healthapp.ui.LoadingDialog;
@@ -71,6 +72,30 @@ public class ReportPresenterImp implements IReportContract.Presenter {
             @Override
             public void onFailure( Call<NoDetailsModel> call, Throwable t ) {
 
+            }
+        });
+    }
+
+    @Override
+    public void getAllQuestions( int formId ) {
+        LoadingDialog.showProgress(context);
+        ApiInterface apiInterface = RetrofitInstance.getRetrofit().create(ApiInterface.class);
+        Call<QuestionModel> call = apiInterface.getAllQuestions(formId);
+        call.enqueue(new Callback<QuestionModel>() {
+            @Override
+            public void onResponse( Call<QuestionModel> call, Response<QuestionModel> response ) {
+                LoadingDialog.hideProgress();
+                if (response.isSuccessful()) {
+                    QuestionModel questionModel = response.body();
+                    if (questionModel.getResponse().size() > 0)
+                        mView.showAllQuestions(questionModel.getResponse());
+                }
+            }
+
+            @Override
+            public void onFailure( Call<QuestionModel> call, Throwable t ) {
+                LoadingDialog.hideProgress();
+                Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
             }
         });
     }
