@@ -19,19 +19,4 @@ public class ContextApplication extends Application {
     }
 
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        checkAuth();
-    }
-
-    private void checkAuth() {
-
-        if (!PreferencesHelperImp.getInstance().getUserIsLogged()) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
-    }
 }

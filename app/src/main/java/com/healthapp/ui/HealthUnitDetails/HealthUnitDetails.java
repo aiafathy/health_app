@@ -63,11 +63,11 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View view ) {
-                if (!spinnerTown.getText().toString().isEmpty() && !spinnerManagement.getText().toString().isEmpty() && !spinnerUnit.getText().toString().isEmpty())
+             /*   if (!spinnerTown.getText().toString().isEmpty() && !spinnerManagement.getText().toString().isEmpty() && !spinnerUnit.getText().toString().isEmpty())*/
                     startActivity(new Intent(HealthUnitDetails.this, ReportsActivity.class));
-                else {
+                /*else {
                     Toast.makeText(HealthUnitDetails.this, "من فضلك حدد البيانات المطلوبة", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
 

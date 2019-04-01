@@ -47,7 +47,7 @@ public class RetrofitInstance {
 
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
-            retrofit = new Retrofit.Builder().baseUrl("https://b223446f.ngrok.io/")
+            retrofit = new Retrofit.Builder().baseUrl("https://70af8f39.ngrok.io/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getHeader())
                     .build();

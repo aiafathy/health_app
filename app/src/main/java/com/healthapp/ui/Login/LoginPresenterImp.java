@@ -29,7 +29,7 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
     @Override
     public void login( String email, String pass, String device_token ) {
         LoadingDialog.showProgress(context);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://b223446f.ngrok.io/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://70af8f39.ngrok.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -41,6 +41,8 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
                 if (response.isSuccessful()) {
                     String token = response.body().get("token").toString().replace("\"", "");
                     mView.goToHealthUnitDetails(token, Integer.parseInt(response.body().getAsJsonObject("user").get("id").toString()));
+                } else {
+                    Toast.makeText(context, "login not success", Toast.LENGTH_SHORT).show();
                 }
             }
 

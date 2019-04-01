@@ -32,10 +32,20 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        checkAuth();
         initiViews();
         createInstance();
         setUpFCM();
         setListener();
+    }
+
+    private void checkAuth() {
+
+        if (PreferencesHelperImp.getInstance().getUserIsLogged()) {
+            Intent intent = new Intent(this, HealthUnitDetails.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void createInstance() {
