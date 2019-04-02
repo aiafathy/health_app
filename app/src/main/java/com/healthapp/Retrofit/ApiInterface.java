@@ -14,44 +14,44 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @POST("api/v1/user/login")
+    @POST("user/login")
     Call<JsonObject> loginUser( @Query("email") String email, @Query("password") String password, @Query("device_token") String device_token );
 
 
-    @GET("api/v1/governorates/details")
+    @GET("governorates/details")
     Call<HealthUnitModel> getGovernoratesList();
 
-    @GET("api/v1/administrations/details/{id}")
+    @GET("administrations/details/{id}")
     Call<HealthUnitModel> getAdministrations( @Path("id") int id );
 
-    @GET("api/v1/units/details/{id}")
+    @GET("units/details/{id}")
     Call<HealthUnitModel> getUnits( @Path("id") int id );
 
 
-    @GET("api/v1/user/details")
+    @GET("user/details")
     Call<UserModel> getUserData();
 
-    @GET("api/v1/user/hostry/units/details/{id}")
+    @GET("user/hostry/units/details/{id}")
     Call<LastVisitsModel> getLastVisits( @Path("id") int userId );
 
-    @GET("api/v1/user/hostry/forms/details/{id}")
+    @GET("user/hostry/forms/details/{id}")
     Call<LastVisitsFormTypeModel> getLastVisitsFormType( @Path("id") int unit_id );
 
-    @GET("api/v1/user/hostry/questions/details/{id}")
+    @GET("user/hostry/questions/details/{id}")
     Call<LastVisitsDetailsModel> getLastVisitsDetails( @Path("id") int form_id );
 
 
-    @GET("api/v1/forms/details")
+    @GET("forms/details")
     Call<FormTypesModel> getAllFormTypes();
 
-    @GET("api/v1/answer/no/details")
+    @GET("answer/no/details")
     Call<NoDetailsModel> getNoDetailsList();
 
-    @GET("api/v1/questions/details/{id}")
+    @GET("questions/details/{id}")
     Call<QuestionModel> getAllQuestions( @Path("id") int id_forms );
 
     @Headers("Content-Type: application/json")
-    @POST("api/v1/add/answer/details")
+    @POST("add/answer/details")
     Call<JsonObject> sendReport( @Body HashMap<String,Object> params );
 
 }

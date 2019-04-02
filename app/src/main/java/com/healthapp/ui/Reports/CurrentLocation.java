@@ -6,13 +6,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -101,8 +106,18 @@ public class CurrentLocation implements GoogleApiClient.OnConnectionFailedListen
     @Override
     public void onConnected( @Nullable Bundle bundle ) {
         Log.i("location", "connected");
-        createLocationRequest();
-        getLocation();
+
+        if (isLocationEnabled()) {
+            createLocationRequest();
+            getLocation();
+        } else {
+            Toast.makeText(context, "من فضلك قم بتشغيل GPS أولا", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     private void createLocationRequest() {
@@ -137,8 +152,10 @@ public class CurrentLocation implements GoogleApiClient.OnConnectionFailedListen
     }
 
     public void close() {
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
+        if (mGoogleApiClient != null) {
+            if (mGoogleApiClient.isConnected()) {
+                mGoogleApiClient.disconnect();
+            }
         }
     }
 

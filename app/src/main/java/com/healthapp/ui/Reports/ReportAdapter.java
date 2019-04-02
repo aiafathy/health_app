@@ -30,11 +30,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
     List<String> noAnswersListStrings;
     Context context;
     HashMap<Integer, String> answerHashMap;
+    HashMap<Integer, Integer> answerNoIdHashMap;
+    int idNoAnswer;
 
     public ReportAdapter( List<NoDetails> noAnswersListStrings, Context context ) {
         this.noAnswersList = noAnswersListStrings;
         this.context = context;
         answerHashMap = new HashMap<>();
+        answerNoIdHashMap = new HashMap<>();
     }
 
     @NonNull
@@ -69,6 +72,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
                     myViewHolder.yesCheckBox.setBackgroundResource(R.drawable.mark);
                     myViewHolder.noAnswerDetailsSpinner.setVisibility(View.GONE);
                     myViewHolder.noAnswerTitle.setVisibility(View.GONE);
+                    myViewHolder.noAnswerDetailsSpinner.clearListSelection();
                 } else {
                     answerHashMap.remove(questionsList.get(position).getId());
                     myViewHolder.yesCheckBox.setBackgroundResource(R.drawable.un_mark);
@@ -87,6 +91,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
                     myViewHolder.noCheckBox.setBackgroundResource(R.drawable.mark);
                     myViewHolder.noAnswerTitle.setVisibility(View.VISIBLE);
                     myViewHolder.noAnswerDetailsSpinner.setVisibility(View.VISIBLE);
+                    myViewHolder.noAnswerDetailsSpinner.setSelection(0);
                 } else {
                     answerHashMap.remove(questionsList.get(position).getId());
                     myViewHolder.noCheckBox.setBackgroundResource(R.drawable.un_mark);
@@ -100,7 +105,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
         myViewHolder.noAnswerDetailsSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
-                int idNoAnswer = noAnswersList.get(i).getId();
+
+                answerNoIdHashMap.put(questionsList.get(position).getId(), noAnswersList.get(i).getId());
+
             }
         });
 
@@ -130,12 +137,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
                 dataReports.setUsers_id(PreferencesHelperImp.getInstance().getUserId());
                 dataReports.setUnit_id(PreferencesHelperImp.getInstance().getUnitId());
                 dataReports.setAnswer(answerHashMap.get(questionsList.get(i).getId()));
-                // TODO HANDLE NO ANSWER SPINNER
-                if (answerHashMap.get(questionsList.get(i).getId()).equals("no")) {
-                    dataReports.setAnswer_no_id(1);
-                } else {
-                    dataReports.setAnswer_no_id(0);
-                }
+                dataReports.setAnswer_no_id(answerNoIdHashMap.get(i));
+
                 dataReportsList.add(dataReports);
             }
         } else

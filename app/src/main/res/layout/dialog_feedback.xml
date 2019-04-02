@@ -37,10 +37,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:gravity="center"
-                    android:textStyle="bold"
                     android:padding="@dimen/_16sdp"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </RelativeLayout>

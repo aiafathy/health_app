@@ -65,7 +65,6 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         initiViews();
         createInstance();
         setListeners();
-        currentLocation.buildGoogleApi();
     }
 
     private void setListeners() {
@@ -78,7 +77,8 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
                 int idFormType = formsTypeList.get(i).getId();
-                reportPresenterImp.getAllQuestions(idFormType);
+                if (noDetailsList.size() > 0)
+                    reportPresenterImp.getAllQuestions(idFormType);
             }
         });
 
@@ -135,34 +135,31 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.button_send:
-                currentLocation.getLocation();
-
+                currentLocation.buildGoogleApi();
                 if (currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
                     showFeedBack();
-                }
-                feedbackDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss( DialogInterface dialogInterface ) {
-                        FeedBack feedBack = new FeedBack();
-                        if (feedbackDialog.getFeedback() != null) {
-                            Log.i("feedback",feedbackDialog.getFeedback());
-                            feedBack.setFeedBack(feedbackDialog.getFeedback());
-                        } else {
-                            showFeedBack();
+                    feedbackDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss( DialogInterface dialogInterface ) {
+                            FeedBack feedBack = new FeedBack();
+                            if (feedbackDialog.getFeedback() != null) {
+                                Log.i("feedback", feedbackDialog.getFeedback());
+                                feedBack.setFeedBack(feedbackDialog.getFeedback());
+                            }
+
+                            feedBackList.add(feedBack);
+
+                            LocationModel locationModel = new LocationModel();
+                            locationModel.setLang(String.valueOf(currentLocation.getLongitude()));
+                            locationModel.setLat(String.valueOf(currentLocation.getLatitude()));
+                            locationModelList.add(locationModel);
+                            Log.i("reportData", locationModelList.get(0).toString() + " , " + feedBackList.get(0).toString() + " , " +
+                                    reportAdapter.getAnswers().get(0).getAnswer());
+                            reportPresenterImp.sendReport(reportAdapter.getAnswers(), locationModelList, feedBackList);
+
                         }
-
-                        feedBackList.add(feedBack);
-
-                        LocationModel locationModel = new LocationModel();
-                        locationModel.setLang(String.valueOf(currentLocation.getLongitude()));
-                        locationModel.setLat(String.valueOf(currentLocation.getLatitude()));
-                        locationModelList.add(locationModel);
-                        Log.i("reportData", locationModelList.get(0).toString() + " , " + feedBackList.get(0).toString() + " , " +
-                                reportAdapter.getAnswers().get(0).getAnswer());
-                        reportPresenterImp.sendReport(reportAdapter.getAnswers(), locationModelList,feedBackList);
-
-                    }
-                });
+                    });
+                }
                 Log.i("location", "lat: " + currentLocation.getLatitude() + " lang: " + currentLocation.getLongitude());
                 break;
         }
@@ -190,8 +187,12 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                     if (ContextCompat.checkSelfPermission(this,
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
+                        if (currentLocation.isLocationEnabled()) {
+                            currentLocation.getLocation();
+                        } else {
+                            Toast.makeText(ReportsActivity.this, "من فضلك قم بتشغيل GPS أولا", Toast.LENGTH_SHORT).show();
+                        }
 
-                        currentLocation.getLocation();
                     }
 
                 } else {
@@ -239,7 +240,6 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
     public void showAllQuestions( List<Questions> questionsList ) {
         // to clear list when user try to get data again
         this.questionsList.clear();
-        this.questionsListStrings.clear();
 
         this.questionsList = questionsList;
         for (int i = 0; i < questionsList.size(); i++) {
