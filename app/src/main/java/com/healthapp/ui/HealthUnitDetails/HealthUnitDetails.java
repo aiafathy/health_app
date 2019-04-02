@@ -1,27 +1,18 @@
 package com.healthapp.ui.HealthUnitDetails;
 
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.healthapp.Prefs.PreferencesHelperImp;
 import com.healthapp.R;
 import com.healthapp.Retrofit.HealthUnit;
-import com.healthapp.ui.Login.LoginActivity;
 import com.healthapp.ui.Reports.ReportsActivity;
 import com.reginald.editspinner.EditSpinner;
 
@@ -63,8 +54,8 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View view ) {
-             /*   if (!spinnerTown.getText().toString().isEmpty() && !spinnerManagement.getText().toString().isEmpty() && !spinnerUnit.getText().toString().isEmpty())*/
-                    startActivity(new Intent(HealthUnitDetails.this, ReportsActivity.class));
+                /*   if (!spinnerTown.getText().toString().isEmpty() && !spinnerManagement.getText().toString().isEmpty() && !spinnerUnit.getText().toString().isEmpty())*/
+                startActivity(new Intent(HealthUnitDetails.this, ReportsActivity.class));
                 /*else {
                     Toast.makeText(HealthUnitDetails.this, "من فضلك حدد البيانات المطلوبة", Toast.LENGTH_SHORT).show();
                 }*/
@@ -121,6 +112,14 @@ public class HealthUnitDetails extends AppCompatActivity implements IHealthUnitD
             public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
                 idManagement = managementList.get(i).getId();
                 healthUnitDetailsImp.getUnitsList(idManagement);
+            }
+        });
+
+        spinnerUnit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
+                int unitID = unitList.get(i).getId();
+                PreferencesHelperImp.getInstance().setUnitId(unitID);
             }
         });
     }

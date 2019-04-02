@@ -14,6 +14,10 @@ public interface PreferencesHelper {
 
     void setUserId( int userId );
 
+    int getUnitId();
+
+    void setUnitId( int unitId );
+
     String getFcmToken();
 
     void setFcmToken( String fcmToken );

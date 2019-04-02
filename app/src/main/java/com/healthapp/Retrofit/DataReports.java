@@ -4,71 +4,58 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class DataReports {
-    @SerializedName("answer")
-    @Expose
     private String answer;
-    @SerializedName("questions_id")
-    @Expose
-    private Integer questionsId;
-    @SerializedName("forms_id")
-    @Expose
-    private Integer formsId;
-    @SerializedName("answer_no_id")
-    @Expose
-    private Integer answerNoId;
-    @SerializedName("users_id")
-    @Expose
-    private Integer usersId;
-    @SerializedName("unit_id")
-    @Expose
-    private Integer unitId;
+    private Integer questions_id;
+    private Integer forms_id;
+    private Integer answer_no_id;
+    private Integer users_id;
+    private Integer unit_id;
 
     public String getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer( String answer ) {
         this.answer = answer;
     }
 
-    public Integer getQuestionsId() {
-        return questionsId;
+    public Integer getQuestions_id() {
+        return questions_id;
     }
 
-    public void setQuestionsId(Integer questionsId) {
-        this.questionsId = questionsId;
+    public void setQuestions_id( Integer questions_id ) {
+        this.questions_id = questions_id;
     }
 
-    public Integer getFormsId() {
-        return formsId;
+    public Integer getForms_id() {
+        return forms_id;
     }
 
-    public void setFormsId(Integer formsId) {
-        this.formsId = formsId;
+    public void setForms_id( Integer forms_id ) {
+        this.forms_id = forms_id;
     }
 
-    public Integer getAnswerNoId() {
-        return answerNoId;
+    public Integer getAnswer_no_id() {
+        return answer_no_id;
     }
 
-    public void setAnswerNoId(Integer answerNoId) {
-        this.answerNoId = answerNoId;
+    public void setAnswer_no_id( Integer answer_no_id ) {
+        this.answer_no_id = answer_no_id;
     }
 
-    public Integer getUsersId() {
-        return usersId;
+    public Integer getUsers_id() {
+        return users_id;
     }
 
-    public void setUsersId(Integer usersId) {
-        this.usersId = usersId;
+    public void setUsers_id( Integer users_id ) {
+        this.users_id = users_id;
     }
 
-    public Integer getUnitId() {
-        return unitId;
+    public Integer getUnit_id() {
+        return unit_id;
     }
 
-    public void setUnitId(Integer unitId) {
-        this.unitId = unitId;
+    public void setUnit_id( Integer unit_id ) {
+        this.unit_id = unit_id;
     }
-
 }

@@ -2,8 +2,12 @@ package com.healthapp.Retrofit;
 
 import com.google.gson.JsonObject;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -45,4 +49,9 @@ public interface ApiInterface {
 
     @GET("api/v1/questions/details/{id}")
     Call<QuestionModel> getAllQuestions( @Path("id") int id_forms );
+
+    @Headers("Content-Type: application/json")
+    @POST("api/v1/add/answer/details")
+    Call<JsonObject> sendReport( @Body HashMap<String,Object> params );
+
 }

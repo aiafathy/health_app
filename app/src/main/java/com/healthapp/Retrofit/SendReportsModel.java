@@ -1,31 +1,41 @@
 package com.healthapp.Retrofit;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class SendReportsModel {
-    @SerializedName("data")
-    @Expose
-    private List<DataReports> data = null;
-    @SerializedName("feed_back")
-    @Expose
-    private List<FeedBack> feedBack = null;
+
+    private List<DataReports> data;
+    private List<FeedBack> feed_back;
+
+    private List<LocationModel> location;
+
+    public SendReportsModel( List<DataReports> data, List<FeedBack> feedBack, List<LocationModel> location ) {
+        this.data = data;
+        this.feed_back = feedBack;
+        this.location = location;
+    }
 
     public List<DataReports> getData() {
         return data;
     }
 
-    public void setData(List<DataReports> data) {
+    public void setData( List<DataReports> data ) {
         this.data = data;
     }
 
     public List<FeedBack> getFeedBack() {
-        return feedBack;
+        return feed_back;
     }
 
-    public void setFeedBack(List<FeedBack> feedBack) {
-        this.feedBack = feedBack;
+    public void setFeedBack( List<FeedBack> feedBack ) {
+        this.feed_back = feedBack;
+    }
+
+    public List<LocationModel> getLocation() {
+        return location;
+    }
+
+    public void setLocation( List<LocationModel> location ) {
+        this.location = location;
     }
 }

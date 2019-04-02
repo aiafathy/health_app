@@ -17,7 +17,9 @@ public class FeedbackDialog extends Dialog implements
     public Activity activity;
     public Dialog dialog;
     LinearLayout verygood_feedback_layout, good_feedback_layout, bad_feedback_lLayout;
-    TextView  question, veryGood, good, bad;
+    TextView question, veryGood, good, bad;
+
+    private String feedback;
 
     public FeedbackDialog( Activity activity ) {
         super(activity);
@@ -60,18 +62,19 @@ public class FeedbackDialog extends Dialog implements
     public void onClick( View v ) {
         switch (v.getId()) {
             case R.id.postive_feedback_layout:
-                Toast.makeText(activity, "very good", Toast.LENGTH_SHORT).show();
-                dismiss();
+                feedback = "very good";
                 break;
             case R.id.negative_feedback_layout:
-                Toast.makeText(activity, "good", Toast.LENGTH_SHORT).show();
-                dismiss();
+                feedback = "good";
                 break;
             case R.id.ambiguity_feedback_layout:
-                Toast.makeText(activity, "bad", Toast.LENGTH_SHORT).show();
-                dismiss();
+                feedback = "bad";
                 break;
         }
         dismiss();
+    }
+
+    public String getFeedback() {
+        return feedback;
     }
 }

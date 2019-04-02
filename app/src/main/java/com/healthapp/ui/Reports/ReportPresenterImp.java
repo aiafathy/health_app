@@ -1,19 +1,29 @@
-package com.healthapp.ui.Reports.Reports1;
+package com.healthapp.ui.Reports;
 
 import android.content.Context;
+import android.support.v4.util.ArrayMap;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.healthapp.Prefs.PreferencesHelperImp;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.healthapp.Retrofit.DataReports;
+import com.healthapp.Retrofit.Questions;
 import com.healthapp.Retrofit.ApiInterface;
+import com.healthapp.Retrofit.FeedBack;
 import com.healthapp.Retrofit.FormTypesModel;
+import com.healthapp.Retrofit.LocationModel;
 import com.healthapp.Retrofit.NoDetailsModel;
 import com.healthapp.Retrofit.QuestionModel;
 import com.healthapp.Retrofit.RetrofitInstance;
-import com.healthapp.Retrofit.UserModel;
+import com.healthapp.Retrofit.SendReportsModel;
 import com.healthapp.ui.LoadingDialog;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,6 +108,35 @@ public class ReportPresenterImp implements IReportContract.Presenter {
                 Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void sendReport( List<DataReports> dataReportsList, List<LocationModel> locationModelList, List<FeedBack> feedBackList ) {
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("data", dataReportsList);
+        hashMap.put("feed_back", feedBackList);
+        hashMap.put("location", locationModelList);
+
+        LoadingDialog.showProgress(context);
+        ApiInterface apiInterface = RetrofitInstance.getRetrofit().create(ApiInterface.class);
+        Call<JsonObject> call = apiInterface.sendReport(hashMap);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse( Call<JsonObject> call, Response<JsonObject> response ) {
+                LoadingDialog.hideProgress();
+                if (response.isSuccessful()) {
+                    mView.showSuccessfullySendReport();
+                }
+            }
+
+            @Override
+            public void onFailure( Call<JsonObject> call, Throwable t ) {
+                LoadingDialog.hideProgress();
+                Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
 

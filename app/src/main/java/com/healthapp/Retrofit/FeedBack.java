@@ -4,15 +4,14 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class FeedBack {
-    @SerializedName("feed_back")
-    @Expose
-    private String feedBack;
+
+    private String feed_back;
 
     public String getFeedBack() {
-        return feedBack;
+        return feed_back;
     }
 
     public void setFeedBack( String feedBack ) {
-        this.feedBack = feedBack;
+        this.feed_back = feedBack;
     }
 }

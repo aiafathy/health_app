@@ -72,4 +72,17 @@ public class PreferencesHelperImp implements PreferencesHelper {
         editor.putInt(Constant.USER_ID, userId);
         editor.apply();
     }
+
+    @Override
+    public int getUnitId() {
+        return context.getSharedPreferences(Constant.SharedPreferencesName, Context.MODE_PRIVATE).getInt(Constant.UNIT_ID, 0);
+    }
+
+    @Override
+    public void setUnitId( int unitId ) {
+        preferences = context.getSharedPreferences(Constant.SharedPreferencesName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(Constant.UNIT_ID, unitId);
+        editor.apply();
+    }
 }

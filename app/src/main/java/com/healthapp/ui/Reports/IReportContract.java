@@ -1,6 +1,9 @@
-package com.healthapp.ui.Reports.Reports1;
+package com.healthapp.ui.Reports;
 
+import com.healthapp.Retrofit.DataReports;
+import com.healthapp.Retrofit.FeedBack;
 import com.healthapp.Retrofit.FormTypes;
+import com.healthapp.Retrofit.LocationModel;
 import com.healthapp.Retrofit.NoDetails;
 import com.healthapp.Retrofit.Questions;
 
@@ -15,6 +18,8 @@ public interface IReportContract {
         void showNoDetailsList( List<NoDetails> noDetailsList );
 
         void showAllQuestions( List<Questions> questionsList );
+
+        void showSuccessfullySendReport();
     }
 
     interface Presenter {
@@ -23,5 +28,7 @@ public interface IReportContract {
         void getNoDetailsList();
 
         void getAllQuestions( int formId );
+
+        void sendReport( List<DataReports> questionsList, List<LocationModel> locationModelList, List<FeedBack> feedBackList );
     }
 }
