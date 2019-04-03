@@ -1,9 +1,12 @@
 package com.healthapp.FCM;
 
+import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -24,10 +27,11 @@ public class MyFirebaseMessangingService extends FirebaseMessagingService {
     public void onMessageReceived( RemoteMessage remoteMessage ) {
         super.onMessageReceived(remoteMessage);
 
-        sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+        createNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
     }
 
-    public void sendNotification( String title, String message ) {
+    @SuppressLint("NewApi")
+    public void createNotification( String title, String message ) {
 
         //TODO OPEN NOTIFICATION ACTIVITY
         Intent intent = new Intent(this, ProfileActivity.class);
@@ -36,15 +40,40 @@ public class MyFirebaseMessangingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         Uri defaultUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this);
-        notification.setSmallIcon(R.drawable.notification);
-        notification.setContentTitle(title);
-        notification.setContentText(message);
-        notification.setAutoCancel(true);
-        notification.setSound(defaultUri);
-        notification.setContentIntent(pendingIntent);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel;
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification.build());
+            String id1 = "BackgroundChannel";
+            mChannel = new NotificationChannel(id1, "Health App",  //name of the channel
+                    NotificationManager.IMPORTANCE_LOW);
+            mChannel.setDescription("Notification Health App");
+            mChannel.enableLights(true);
+            mChannel.setShowBadge(true);
+
+            notificationManager.createNotificationChannel(mChannel);
+
+            NotificationCompat.Builder notification = new NotificationCompat.Builder(this);
+            notification.setSmallIcon(R.drawable.notification);
+            notification.setContentTitle(title);
+            notification.setContentText(message);
+            notification.setAutoCancel(true);
+            notification.setSound(defaultUri);
+            notification.setContentIntent(pendingIntent);
+
+            notificationManager.notify(0, notification.build());
+        } else {
+
+            NotificationCompat.Builder notification = new NotificationCompat.Builder(this);
+            notification.setSmallIcon(R.drawable.notification);
+            notification.setContentTitle(title);
+            notification.setContentText(message);
+            notification.setAutoCancel(true);
+            notification.setSound(defaultUri);
+            notification.setContentIntent(pendingIntent);
+
+            notificationManager.notify(0, notification.build());
+        }
+
     }
 }

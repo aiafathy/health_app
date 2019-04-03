@@ -6,9 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,15 +32,12 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
     List<NoDetails> noAnswersList;
     List<String> noAnswersListStrings;
     Context context;
-    HashMap<Integer, String> answerHashMap;
-    HashMap<Integer, Integer> answerNoIdHashMap;
-    int idNoAnswer;
+    HashMap<Integer, AnswersHashMAp> answerHashMap;
 
     public ReportAdapter( List<NoDetails> noAnswersListStrings, Context context ) {
         this.noAnswersList = noAnswersListStrings;
         this.context = context;
         answerHashMap = new HashMap<>();
-        answerNoIdHashMap = new HashMap<>();
     }
 
     @NonNull
@@ -58,9 +58,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
             noAnswersListStrings.add(noAnswersList.get(i).getAnswer());
         }
 
-        ArrayAdapter<String> reportsAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, noAnswersListStrings);
-        myViewHolder.noAnswerDetailsSpinner.setAdapter(reportsAdapter);
 
+        ArrayAdapter<String> reportsAdapter = new ArrayAdapter<String>(context, R.layout.spinner_text,noAnswersListStrings);
+        reportsAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+
+        myViewHolder.noAnswerDetailsSpinner.setAdapter(reportsAdapter);
         // handle check box yes
         myViewHolder.yesCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,11 +70,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
                 myViewHolder.noCheckBox.setBackgroundResource(R.drawable.un_mark);
                 myViewHolder.noCheckBox.setChecked(false);
                 if (((CheckBox) view).isChecked()) {
-                    answerHashMap.put(questionsList.get(position).getId(), "yes");
+                    answerHashMap.put(questionsList.get(position).getId(), new AnswersHashMAp("yes", 0));
                     myViewHolder.yesCheckBox.setBackgroundResource(R.drawable.mark);
-                    myViewHolder.noAnswerDetailsSpinner.setVisibility(View.GONE);
+                    myViewHolder.spinnerViewGroup.setVisibility(View.GONE);
                     myViewHolder.noAnswerTitle.setVisibility(View.GONE);
-                    myViewHolder.noAnswerDetailsSpinner.clearListSelection();
                 } else {
                     answerHashMap.remove(questionsList.get(position).getId());
                     myViewHolder.yesCheckBox.setBackgroundResource(R.drawable.un_mark);
@@ -87,27 +88,28 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
                 myViewHolder.yesCheckBox.setBackgroundResource(R.drawable.un_mark);
                 myViewHolder.yesCheckBox.setChecked(false);
                 if (((CheckBox) view).isChecked()) {
-                    answerHashMap.put(questionsList.get(position).getId(), "no");
                     myViewHolder.noCheckBox.setBackgroundResource(R.drawable.mark);
                     myViewHolder.noAnswerTitle.setVisibility(View.VISIBLE);
-                    myViewHolder.noAnswerDetailsSpinner.setVisibility(View.VISIBLE);
-                    myViewHolder.noAnswerDetailsSpinner.setSelection(0);
+                    myViewHolder.spinnerViewGroup.setVisibility(View.VISIBLE);
                 } else {
-                    answerHashMap.remove(questionsList.get(position).getId());
                     myViewHolder.noCheckBox.setBackgroundResource(R.drawable.un_mark);
-                    myViewHolder.noAnswerDetailsSpinner.setVisibility(View.GONE);
-                    myViewHolder.noAnswerDetailsSpinner.clearListSelection();
+                    myViewHolder.spinnerViewGroup.setVisibility(View.GONE);
                     myViewHolder.noAnswerTitle.setVisibility(View.GONE);
                 }
             }
         });
 
-        myViewHolder.noAnswerDetailsSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        myViewHolder.noAnswerDetailsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
+            public void onItemSelected( AdapterView<?> adapterView, View view, int i, long l ) {
+                answerHashMap.put(questionsList.get(position).getId(), new AnswersHashMAp("no", noAnswersList.get(i).getId()));
+            }
 
-                answerNoIdHashMap.put(questionsList.get(position).getId(), noAnswersList.get(i).getId());
-
+            @Override
+            public void onNothingSelected( AdapterView<?> adapterView ) {
+                if (myViewHolder.noCheckBox.isChecked()) {
+                    Toast.makeText(context, "من فضلك وضح السبب", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -127,30 +129,34 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
         this.questionsList = questionsList;
     }
 
+    public boolean isAllQuestionsIsAnswered() {
+        if (answerHashMap.size() == questionsList.size())
+            return true;
+        else
+            return false;
+    }
+
     public List<DataReports> getAnswers() {
         List<DataReports> dataReportsList = new ArrayList<>();
-        if (answerHashMap.size() == questionsList.size()) {
-            for (int i = 0; i < questionsList.size(); i++) {
-                DataReports dataReports = new DataReports();
-                dataReports.setQuestions_id(questionsList.get(i).getId());
-                dataReports.setForms_id(questionsList.get(i).getFormsId());
-                dataReports.setUsers_id(PreferencesHelperImp.getInstance().getUserId());
-                dataReports.setUnit_id(PreferencesHelperImp.getInstance().getUnitId());
-                dataReports.setAnswer(answerHashMap.get(questionsList.get(i).getId()));
-                dataReports.setAnswer_no_id(answerNoIdHashMap.get(i));
+        for (int i = 0; i < questionsList.size(); i++) {
+            DataReports dataReports = new DataReports();
+            dataReports.setQuestions_id(questionsList.get(i).getId());
+            dataReports.setForms_id(questionsList.get(i).getFormsId());
+            dataReports.setUsers_id(PreferencesHelperImp.getInstance().getUserId());
+            dataReports.setUnit_id(PreferencesHelperImp.getInstance().getUnitId());
+            dataReports.setAnswer(answerHashMap.get(questionsList.get(i).getId()).getAnswer());
+            dataReports.setAnswer_no_id(answerHashMap.get(questionsList.get(i).getId()).getNoAnswerId());
 
-                dataReportsList.add(dataReports);
-            }
-        } else
-            Toast.makeText(context, "من فضلك أجب علي كل الاسئلة", Toast.LENGTH_SHORT).show();
-
+            dataReportsList.add(dataReports);
+        }
         return dataReportsList;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView question, noAnswerTitle;
         CheckBox yesCheckBox, noCheckBox;
-        EditSpinner noAnswerDetailsSpinner;
+        Spinner noAnswerDetailsSpinner;
+        RelativeLayout spinnerViewGroup;
 
         public MyViewHolder( @NonNull View itemView ) {
             super(itemView);
@@ -159,7 +165,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
             noCheckBox = itemView.findViewById(R.id.checkbox_no);
             noAnswerTitle = itemView.findViewById(R.id.text_no_answer);
             noAnswerDetailsSpinner = itemView.findViewById(R.id.spinner_no_answer_details);
-
+            spinnerViewGroup = itemView.findViewById(R.id.spinner_relativeType);
         }
     }
 

@@ -94,32 +94,45 @@
             android:text="من فضلك وضح السبب"
             android:textColor="@color/white"
             android:textSize="@dimen/_11ssp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/checkbox_no" />
 
-        <com.reginald.editspinner.EditSpinner
-            android:id="@+id/spinner_no_answer_details"
+
+        <RelativeLayout
+            android:id="@+id/spinner_relativeType"
             android:layout_width="0dp"
             android:layout_height="@dimen/_26sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/background_edit"
-            android:drawableStart="@drawable/arrow"
-            android:editable="false"
-            android:fontFamily="@font/cairo_bold"
-            android:hint="سبب اختياري لا"
-            android:paddingStart="@dimen/_6sdp"
-            android:paddingEnd="@dimen/_8sdp"
-            android:textColor="@color/greenblue"
-            android:textSize="@dimen/_11sdp"
-            android:textStyle="bold"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toStartOf="@id/text_no_answer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_no" />
+            app:layout_constraintTop_toBottomOf="@id/checkbox_no">
 
+            <Spinner
+                android:id="@+id/spinner_no_answer_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:src="@drawable/arrow" />
+
+        </RelativeLayout>
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

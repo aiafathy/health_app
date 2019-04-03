@@ -65,6 +65,7 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
         initiViews();
         createInstance();
         setListeners();
+        currentLocation.buildGoogleApi();
     }
 
     private void setListeners() {
@@ -135,32 +136,38 @@ public class ReportsActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.button_send:
-                currentLocation.buildGoogleApi();
-                if (currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
-                    showFeedBack();
-                    feedbackDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss( DialogInterface dialogInterface ) {
-                            FeedBack feedBack = new FeedBack();
-                            if (feedbackDialog.getFeedback() != null) {
-                                Log.i("feedback", feedbackDialog.getFeedback());
-                                feedBack.setFeedBack(feedbackDialog.getFeedback());
+                if (reportAdapter.isAllQuestionsIsAnswered()) {
+                    if (currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
+                        showFeedBack();
+                        feedbackDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss( DialogInterface dialogInterface ) {
+                                //to clear data
+                                feedBackList.clear();
+                                locationModelList.clear();
+
+                                FeedBack feedBack = new FeedBack();
+                                if (feedbackDialog.getFeedback() != null) {
+                                    Log.i("feedback", feedbackDialog.getFeedback());
+                                    feedBack.setFeedBack(feedbackDialog.getFeedback());
+                                }
+
+                                feedBackList.add(feedBack);
+
+                                LocationModel locationModel = new LocationModel();
+                                locationModel.setLang(String.valueOf(currentLocation.getLongitude()));
+                                locationModel.setLat(String.valueOf(currentLocation.getLatitude()));
+                                locationModelList.add(locationModel);
+                                reportPresenterImp.sendReport(reportAdapter.getAnswers(), locationModelList, feedBackList);
+
                             }
+                        });
+                    }
+                    Log.i("location", "lat: " + currentLocation.getLatitude() + " lang: " + currentLocation.getLongitude());
 
-                            feedBackList.add(feedBack);
+                } else
+                    Toast.makeText(ReportsActivity.this, "من فضلك أجب علي كل الاسئلة", Toast.LENGTH_SHORT).show();
 
-                            LocationModel locationModel = new LocationModel();
-                            locationModel.setLang(String.valueOf(currentLocation.getLongitude()));
-                            locationModel.setLat(String.valueOf(currentLocation.getLatitude()));
-                            locationModelList.add(locationModel);
-                            Log.i("reportData", locationModelList.get(0).toString() + " , " + feedBackList.get(0).toString() + " , " +
-                                    reportAdapter.getAnswers().get(0).getAnswer());
-                            reportPresenterImp.sendReport(reportAdapter.getAnswers(), locationModelList, feedBackList);
-
-                        }
-                    });
-                }
-                Log.i("location", "lat: " + currentLocation.getLatitude() + " lang: " + currentLocation.getLongitude());
                 break;
         }
 

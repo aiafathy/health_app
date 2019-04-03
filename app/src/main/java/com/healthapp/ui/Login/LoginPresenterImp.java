@@ -29,7 +29,7 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
     @Override
     public void login( String email, String pass, String device_token ) {
         LoadingDialog.showProgress(context);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://81.21.105.203:8080/health/api/v1")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://81.21.105.203:8080/health/api/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);

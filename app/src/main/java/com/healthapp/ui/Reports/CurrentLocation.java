@@ -155,6 +155,7 @@ public class CurrentLocation implements GoogleApiClient.OnConnectionFailedListen
         if (mGoogleApiClient != null) {
             if (mGoogleApiClient.isConnected()) {
                 mGoogleApiClient.disconnect();
+                mLocationRequest = null;
             }
         }
     }
