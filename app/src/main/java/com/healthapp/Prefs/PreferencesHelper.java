@@ -22,4 +22,6 @@ public interface PreferencesHelper {
 
     void setFcmToken( String fcmToken );
 
+    void removeAllValues();
+
 }

@@ -59,7 +59,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
         }
 
 
-        ArrayAdapter<String> reportsAdapter = new ArrayAdapter<String>(context, R.layout.spinner_text,noAnswersListStrings);
+        ArrayAdapter<String> reportsAdapter = new ArrayAdapter<String>(context, R.layout.spinner_text, noAnswersListStrings);
         reportsAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
 
         myViewHolder.noAnswerDetailsSpinner.setAdapter(reportsAdapter);

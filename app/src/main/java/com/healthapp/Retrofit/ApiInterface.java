@@ -52,6 +52,8 @@ public interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST("add/answer/details")
-    Call<JsonObject> sendReport( @Body HashMap<String,Object> params );
+    Call<JsonObject> sendReport( @Body HashMap<String, Object> params );
 
+    @GET("user/messages/{id}")
+    Call<NotificationsModel> getNotifications( @Path("id") int userId );
 }
