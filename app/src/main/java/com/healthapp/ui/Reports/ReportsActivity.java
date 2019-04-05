@@ -33,10 +33,10 @@ public class ReportsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() == 0) {
-            super.onBackPressed();
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            finish();
         } else {
-            getFragmentManager().popBackStack();
+            super.onBackPressed();
         }
     }
 }

@@ -7,7 +7,7 @@ public class DataReports {
     private String answer;
     private Integer questions_id;
     private Integer forms_id;
-    private Integer answer_no_id;
+    private String answer_no_id;
     private Integer users_id;
     private Integer unit_id;
 
@@ -35,11 +35,11 @@ public class DataReports {
         this.forms_id = forms_id;
     }
 
-    public Integer getAnswer_no_id() {
+    public String getAnswer_no_id() {
         return answer_no_id;
     }
 
-    public void setAnswer_no_id( Integer answer_no_id ) {
+    public void setAnswer_no_id( String answer_no_id ) {
         this.answer_no_id = answer_no_id;
     }
 

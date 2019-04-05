@@ -9,7 +9,7 @@ public interface IProfileContract {
     interface View {
         void showName( String name );
 
-        void showUserVisitsList( List<LastVisits> lastVisitsList );
+        void showUserVisitsList( List<LastVisits> lastVisitsList);
 
     }
 

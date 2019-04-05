@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.healthapp.ui.Profile.ProfileActivity">
+    android:background="@color/white">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -48,7 +47,6 @@
                 android:layout_marginTop="@dimen/_6sdp"
                 android:fontFamily="@font/cairo_bold"
                 android:gravity="center"
-                android:text="اسم المشرف هنا"
                 android:textColor="@color/darkcerulean"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />

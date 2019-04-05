@@ -36,8 +36,8 @@ public class VisitsQADetailsPresenterImp implements IVisitsQADetailsContract.Pre
                 LoadingDialog.hideProgress();
                 if (response.isSuccessful()) {
                     LastVisitsDetailsModel lastVisitsDetailsModel = response.body();
-                    if (lastVisitsDetailsModel.getResponse().size() > 0)
-                        mView.showUserVisitsDetailsList(lastVisitsDetailsModel.getResponse());
+                    if (lastVisitsDetailsModel.getResponse().getData().size() > 0)
+                        mView.showUserVisitsDetailsList(lastVisitsDetailsModel.getResponse().getData(), lastVisitsDetailsModel.getResponse().getFeedBack());
                 }
             }
 

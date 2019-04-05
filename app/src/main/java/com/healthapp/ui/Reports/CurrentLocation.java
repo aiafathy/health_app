@@ -44,9 +44,20 @@ public class CurrentLocation implements GoogleApiClient.OnConnectionFailedListen
                 .addApi(LocationServices.API)
                 .build();
 
-        mGoogleApiClient.connect();
+        connectGPS();
     }
 
+    public void connectGPS() {
+        if (!mGoogleApiClient.isConnected())
+            mGoogleApiClient.connect();
+
+        else if (isLocationEnabled()) {
+            createLocationRequest();
+            getLocation();
+        } else {
+            Toast.makeText(context, "من فضلك قم بتشغيل GPS أولا", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public void getLocation() {
         if (checkLocationPermission()) {

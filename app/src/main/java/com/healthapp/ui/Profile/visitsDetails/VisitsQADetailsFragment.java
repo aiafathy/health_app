@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.healthapp.R;
 import com.healthapp.Retrofit.LastVisitsDetails;
+import com.healthapp.Retrofit.LastVisitsDetailsList;
 import com.healthapp.ui.Profile.visitsFormType.AllVisitsFormTypePresenterImp;
 import com.healthapp.ui.Profile.visitsFormType.VisitsTypeFormAdapter;
 
@@ -28,6 +29,7 @@ public class VisitsQADetailsFragment extends Fragment implements IVisitsQADetail
     List<String> lastVisitsDetailsString;
     int formId;
     String unitName;
+    TextView feedbackText;
 
     @Nullable
     @Override
@@ -56,18 +58,21 @@ public class VisitsQADetailsFragment extends Fragment implements IVisitsQADetail
 
     private void initiViews( View view ) {
         title = view.findViewById(R.id.title);
+        feedbackText = view.findViewById(R.id.feedback);
         allVisitsDetailsRecyclerView = view.findViewById(R.id.recycler_visits_details);
         title.setText("تفاصيل التقارير السابقة لوحدة: " + unitName);
     }
 
 
     @Override
-    public void showUserVisitsDetailsList( List<LastVisitsDetails> lastVisitsList ) {
+    public void showUserVisitsDetailsList( List<LastVisitsDetailsList> lastVisitsList, String feedback ) {
         visitsQADetailsAdapter.setLastVisitsModelList(lastVisitsList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         allVisitsDetailsRecyclerView.setLayoutManager(linearLayoutManager);
         allVisitsDetailsRecyclerView.setAdapter(visitsQADetailsAdapter);
 
+        feedbackText.setVisibility(View.VISIBLE);
+        feedbackText.setText("رايك عن هذه الزيارة:  " + feedback);
     }
 }

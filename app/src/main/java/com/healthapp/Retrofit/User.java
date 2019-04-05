@@ -23,7 +23,10 @@ public class User {
     private String avatar;
     @SerializedName("settings")
     @Expose
-    private List<Object> settings = null;
+    private SettingsModel settings;
+    @SerializedName("device_token")
+    @Expose
+    private String deviceToken;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -35,7 +38,7 @@ public class User {
         return id;
     }
 
-    public void setId( Integer id ) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -43,7 +46,7 @@ public class User {
         return roleId;
     }
 
-    public void setRoleId( Integer roleId ) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 
@@ -51,7 +54,7 @@ public class User {
         return name;
     }
 
-    public void setName( String name ) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -59,7 +62,7 @@ public class User {
         return email;
     }
 
-    public void setEmail( String email ) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -67,23 +70,31 @@ public class User {
         return avatar;
     }
 
-    public void setAvatar( String avatar ) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
-    public List<Object> getSettings() {
+    public SettingsModel getSettings() {
         return settings;
     }
 
-    public void setSettings( List<Object> settings ) {
+    public void setSettings(SettingsModel settings) {
         this.settings = settings;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 
     public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt( String createdAt ) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -91,7 +102,6 @@ public class User {
         return updatedAt;
     }
 
-    public void setUpdatedAt( String updatedAt ) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
-}
+    }}

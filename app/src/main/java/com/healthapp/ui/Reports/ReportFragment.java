@@ -118,6 +118,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
         currentLocation = new CurrentLocation(getActivity());
         reportPresenterImp = new ReportPresenterImp(this, getActivity());
         reportPresenterImp.getNoDetailsList();
+        reportPresenterImp.getFormsType();
     }
 
     private void initiViews( View view ) {
@@ -150,6 +151,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
 
             case R.id.button_send:
                 if (reportAdapter.isAllQuestionsIsAnswered()) {
+                    currentLocation.connectGPS();
                     if (currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
                         showFeedBack();
                         feedbackDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -175,6 +177,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
 
                             }
                         });
+                    } else {
+                        Toast.makeText(getActivity(), "من فضلك قم بتشغيل GPS", Toast.LENGTH_SHORT).show();
                     }
                     Log.i("location", "lat: " + currentLocation.getLatitude() + " lang: " + currentLocation.getLongitude());
 
@@ -273,8 +277,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
     }
 
     @Override
-    public void showSuccessfullySendReport() {
-        Toast.makeText(getActivity(), "تم ارسال التقرير بنجاح", Toast.LENGTH_SHORT).show();
+    public void showSuccessfullySendReport( int code ) {
+        if (code == 200)
+            Toast.makeText(getActivity(), "تم ارسال التقرير بنجاح", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getActivity(), "حدث خطا يرجي المحاولة مرة اخري", Toast.LENGTH_SHORT).show();
+
     }
 
     public void addFragment( Fragment fragment ) {

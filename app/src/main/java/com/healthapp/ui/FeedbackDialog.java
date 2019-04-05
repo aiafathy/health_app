@@ -5,19 +5,21 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.healthapp.R;
+import com.reginald.editspinner.EditSpinner;
 
-public class FeedbackDialog extends Dialog implements
-        android.view.View.OnClickListener {
+public class FeedbackDialog extends Dialog {
 
     public Activity activity;
     public Dialog dialog;
-    LinearLayout verygood_feedback_layout, good_feedback_layout, bad_feedback_lLayout;
-    TextView question, veryGood, good, bad;
+    TextView question;
+    Button ok;
+    EditSpinner feedbackEditSpinner;
 
     private String feedback;
 
@@ -34,45 +36,28 @@ public class FeedbackDialog extends Dialog implements
 
         initiViews();
 
-        verygood_feedback_layout.setOnClickListener(this);
-        good_feedback_layout.setOnClickListener(this);
-        bad_feedback_lLayout.setOnClickListener(this);
-
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick( View view ) {
+                if (!feedbackEditSpinner.getText().toString().isEmpty()) {
+                    feedback = feedbackEditSpinner.getText().toString();
+                    dismiss();
+                } else {
+                    Toast.makeText(activity, "من فضلك اكتب رايك عن الزيارة", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void initiViews() {
-        verygood_feedback_layout = findViewById(R.id.postive_feedback_layout);
-        good_feedback_layout = findViewById(R.id.negative_feedback_layout);
-        bad_feedback_lLayout = findViewById(R.id.ambiguity_feedback_layout);
 
-
+        feedbackEditSpinner = findViewById(R.id.edit_feedback);
         question = findViewById(R.id.question_dialog);
-
-        veryGood = findViewById(R.id.very_good_dialog);
-        good = findViewById(R.id.good_dialog);
-        bad = findViewById(R.id.bad_dialog);
+        ok = findViewById(R.id.okay);
 
         question.setText("من فضلك قيم زياراتك للوحدة الصحية");
-        veryGood.setText("ممتاز");
-        good.setText("جيد");
-        bad.setText("سيء");
     }
 
-    @Override
-    public void onClick( View v ) {
-        switch (v.getId()) {
-            case R.id.postive_feedback_layout:
-                feedback = "very good";
-                break;
-            case R.id.negative_feedback_layout:
-                feedback = "good";
-                break;
-            case R.id.ambiguity_feedback_layout:
-                feedback = "bad";
-                break;
-        }
-        dismiss();
-    }
 
     public String getFeedback() {
         return feedback;

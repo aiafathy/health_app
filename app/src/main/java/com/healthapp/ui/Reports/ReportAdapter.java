@@ -70,7 +70,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
                 myViewHolder.noCheckBox.setBackgroundResource(R.drawable.un_mark);
                 myViewHolder.noCheckBox.setChecked(false);
                 if (((CheckBox) view).isChecked()) {
-                    answerHashMap.put(questionsList.get(position).getId(), new AnswersHashMAp("yes", 0));
+                    answerHashMap.put(questionsList.get(position).getId(), new AnswersHashMAp("yes", "null"));
                     myViewHolder.yesCheckBox.setBackgroundResource(R.drawable.mark);
                     myViewHolder.spinnerViewGroup.setVisibility(View.GONE);
                     myViewHolder.noAnswerTitle.setVisibility(View.GONE);
@@ -102,7 +102,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
         myViewHolder.noAnswerDetailsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected( AdapterView<?> adapterView, View view, int i, long l ) {
-                answerHashMap.put(questionsList.get(position).getId(), new AnswersHashMAp("no", noAnswersList.get(i).getId()));
+                answerHashMap.put(questionsList.get(position).getId(), new AnswersHashMAp("no", String.valueOf(noAnswersList.get(i).getId())));
             }
 
             @Override

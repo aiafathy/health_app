@@ -16,10 +16,10 @@ import java.util.List;
 
 public class VisitsTypeFormAdapter extends RecyclerView.Adapter<VisitsTypeFormAdapter.MyViewHolder> {
     List<LastVisitsFormType> lastVisitsModelList;
-    AllVisitsAdapter.LastVisitsClick lastVisitsClick;
+    LastVisitsClick lastVisitsClick;
 
 
-    public VisitsTypeFormAdapter( AllVisitsAdapter.LastVisitsClick lastVisitsClick ) {
+    public VisitsTypeFormAdapter( LastVisitsClick lastVisitsClick ) {
         this.lastVisitsClick = lastVisitsClick;
     }
 
@@ -42,12 +42,6 @@ public class VisitsTypeFormAdapter extends RecyclerView.Adapter<VisitsTypeFormAd
     public void onBindViewHolder( @NonNull MyViewHolder myViewHolder, int position ) {
         LastVisitsFormType lastVisits = lastVisitsModelList.get(position);
         myViewHolder.nameUnit.setText(lastVisits.getName());
-        if (lastVisits.getTotal() == 1)
-            myViewHolder.numVisits.setText("تمت زياراتها مرة واحدة");
-        else if (lastVisits.getTotal() == 2)
-            myViewHolder.numVisits.setText("تمت زياراتها مرتين");
-        else
-            myViewHolder.numVisits.setText("تمت زياراتها " + lastVisits.getTotal() + "  مرات  ");
 
     }
 
@@ -57,14 +51,13 @@ public class VisitsTypeFormAdapter extends RecyclerView.Adapter<VisitsTypeFormAd
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView nameUnit, numVisits;
-        AllVisitsAdapter.LastVisitsClick lastVisitsClick;
+        TextView nameUnit;
+        LastVisitsClick lastVisitsClick;
 
-        public MyViewHolder( @NonNull View itemView, AllVisitsAdapter.LastVisitsClick lastVisitsClick ) {
+        public MyViewHolder( @NonNull View itemView, LastVisitsClick lastVisitsClick ) {
             super(itemView);
             this.lastVisitsClick = lastVisitsClick;
             nameUnit = itemView.findViewById(R.id.unit_name);
-            numVisits = itemView.findViewById(R.id.visit_num);
 
             itemView.setOnClickListener(this);
         }

@@ -126,7 +126,7 @@ public class ReportPresenterImp implements IReportContract.Presenter {
             public void onResponse( Call<JsonObject> call, Response<JsonObject> response ) {
                 LoadingDialog.hideProgress();
                 if (response.isSuccessful()) {
-                    mView.showSuccessfullySendReport();
+                    mView.showSuccessfullySendReport(Integer.parseInt(response.body().get("code").toString()));
                 }
             }
 

@@ -2,9 +2,9 @@ package com.healthapp.ui.Reports;
 
 public class AnswersHashMAp {
     String answer;
-    Integer noAnswerId;
+    String noAnswerId;
 
-    public AnswersHashMAp( String answer, Integer noAnswerId ) {
+    public AnswersHashMAp( String answer, String noAnswerId ) {
         this.answer = answer;
         this.noAnswerId = noAnswerId;
     }
@@ -17,11 +17,12 @@ public class AnswersHashMAp {
         this.answer = answer;
     }
 
-    public Integer getNoAnswerId() {
+
+    public String getNoAnswerId() {
         return noAnswerId;
     }
 
-    public void setNoAnswerId( Integer noAnswerId ) {
+    public void setNoAnswerId( String noAnswerId ) {
         this.noAnswerId = noAnswerId;
     }
 }

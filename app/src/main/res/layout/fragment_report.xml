@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/ghostwhite"
     tools:context="com.healthapp.ui.Reports.ReportsActivity">
 
     <android.support.v7.widget.Toolbar
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_38sdp"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/white"
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp">
 
@@ -52,7 +52,7 @@
                 android:fontFamily="@font/cairo_regular"
                 android:gravity="center"
                 android:text="            التقرير"
-                android:textColor="@color/black"
+                android:textColor="@color/greenblue"
                 android:textSize="@dimen/_16sdp" />
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -12,8 +12,7 @@
         <RelativeLayout
             android:id="@+id/semi_trans"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@color/white">
+            android:layout_height="70dp">
 
         </RelativeLayout>
 
@@ -21,8 +20,7 @@
             android:id="@+id/dialog_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/semi_trans"
-            android:background="@color/white">
+            android:layout_below="@+id/semi_trans">
 
             <LinearLayout
                 android:id="@+id/feedback_body_layout"
@@ -47,107 +45,52 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/review_icon"
-            android:layout_marginTop="@dimen/_6sdp"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_130sdp"
             android:layout_above="@+id/dialog_body"
-            android:scaleType="centerCrop"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:scaleType="centerCrop"
             android:src="@drawable/dectors" />
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/dialog_action"
+    <com.reginald.editspinner.EditSpinner
+        android:id="@+id/edit_feedback"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:background="#FFF"
-        android:orientation="horizontal"
-        android:weightSum="3">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:background="#e7e8e9"
+        android:editable="true"
+        android:fontFamily="@font/cairo_bold"
+        android:hint="your feedback"
+        android:inputType="text"
+        android:maxLines="4"
+        android:padding="@dimen/_8sdp"
+        android:textColor="@color/greenblue"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold">
 
-        <LinearLayout
-            android:id="@+id/postive_feedback_layout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:padding="20dp">
+        <requestFocus />
+    </com.reginald.editspinner.EditSpinner>
 
-            <ImageView
-                android:id="@+id/postive_feedback_icon"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/verygood" />
-
-            <TextView
-                android:id="@+id/very_good_dialog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
-                tools:text="ممتاز" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/negative_feedback_layout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <ImageView
-                android:id="@+id/negative_feedback_icon"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/good" />
-
-            <TextView
-                android:id="@+id/good_dialog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
-                tools:text="جيد" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ambiguity_feedback_layout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <ImageView
-                android:id="@+id/ambiguity_feedback_icon"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/verybad" />
-
-            <TextView
-                android:id="@+id/bad_dialog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
-                tools:text="سيء" />
-        </LinearLayout>
-    </LinearLayout>
+    <Button
+        android:id="@+id/okay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_38sdp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_90sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_90sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:background="#18c9e9"
+        android:fontFamily="@font/cairo_bold"
+        android:gravity="center"
+        android:paddingBottom="@dimen/_8sdp"
+        android:text="ok"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold" />
 </LinearLayout>

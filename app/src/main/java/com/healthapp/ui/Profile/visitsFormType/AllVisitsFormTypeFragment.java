@@ -20,7 +20,7 @@ import com.healthapp.ui.Profile.visitsDetails.VisitsQADetailsFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllVisitsFormTypeFragment extends Fragment implements IAllVisitsFormTypeContract.View, AllVisitsAdapter.LastVisitsClick {
+public class AllVisitsFormTypeFragment extends Fragment implements IAllVisitsFormTypeContract.View, VisitsTypeFormAdapter.LastVisitsClick {
     VisitsTypeFormAdapter visitsTypeFormAdapter;
     RecyclerView allVisitsFormRecyclerView;
     TextView title;
@@ -29,6 +29,7 @@ public class AllVisitsFormTypeFragment extends Fragment implements IAllVisitsFor
     List<LastVisitsFormType> lastVisitsFormTypeList;
     List<String> lastVisitsFormTypeListString;
     AllVisitsFormTypePresenterImp allVisitsFormTypePresenterImp;
+    TextView feedback;
 
     @Nullable
     @Override
@@ -58,6 +59,8 @@ public class AllVisitsFormTypeFragment extends Fragment implements IAllVisitsFor
 
     private void initiViews( View view ) {
         title = view.findViewById(R.id.title);
+        feedback = view.findViewById(R.id.feedback);
+        feedback.setVisibility(View.GONE);
         allVisitsFormRecyclerView = view.findViewById(R.id.recycler_visits_details);
         title.setText("الزيارات السابقة لوحدة: " + unitName);
     }

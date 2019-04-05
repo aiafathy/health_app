@@ -15,7 +15,7 @@ public class LastVisitsDetailsModel {
 
     @SerializedName("response")
     @Expose
-    private List<LastVisitsDetails> response = null;
+    private LastVisitsDetails response = null;
 
     public Boolean getStatus() {
         return status;
@@ -33,11 +33,11 @@ public class LastVisitsDetailsModel {
         this.code = code;
     }
 
-    public List<LastVisitsDetails> getResponse() {
+    public LastVisitsDetails getResponse() {
         return response;
     }
 
-    public void setResponse( List<LastVisitsDetails> response ) {
+    public void setResponse( LastVisitsDetails response ) {
         this.response = response;
     }
 

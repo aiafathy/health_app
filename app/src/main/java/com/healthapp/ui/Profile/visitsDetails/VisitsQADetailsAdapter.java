@@ -8,28 +8,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.healthapp.R;
-import com.healthapp.Retrofit.LastVisitsDetails;
+import com.healthapp.Retrofit.LastVisitsDetailsList;
 
 
 import java.util.List;
 
 public class VisitsQADetailsAdapter extends RecyclerView.Adapter<VisitsQADetailsAdapter.MyViewHolder> {
-    List<LastVisitsDetails> lastVisitsModelList;
+    List<LastVisitsDetailsList> lastVisitsModelList;
 
-    public void setLastVisitsModelList( List<LastVisitsDetails> lastVisitsModelList ) {
+    public void setLastVisitsModelList( List<LastVisitsDetailsList> lastVisitsModelList ) {
         this.lastVisitsModelList = lastVisitsModelList;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder( @NonNull ViewGroup viewGroup, int i ) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.profile_all_visits_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.visits_details_item, viewGroup, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder( @NonNull MyViewHolder myViewHolder, int position ) {
-        LastVisitsDetails lastVisits = lastVisitsModelList.get(position);
+        LastVisitsDetailsList lastVisits = lastVisitsModelList.get(position);
         myViewHolder.question.setText(lastVisits.getName());
         myViewHolder.answer.setText(lastVisits.getAnswer());
 
@@ -45,8 +45,8 @@ public class VisitsQADetailsAdapter extends RecyclerView.Adapter<VisitsQADetails
 
         public MyViewHolder( @NonNull View itemView ) {
             super(itemView);
-            question = itemView.findViewById(R.id.unit_name);
-            answer = itemView.findViewById(R.id.visit_num);
+            question = itemView.findViewById(R.id.question);
+            answer = itemView.findViewById(R.id.answer);
 
         }
     }

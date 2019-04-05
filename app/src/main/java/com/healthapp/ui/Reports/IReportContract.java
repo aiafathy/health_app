@@ -19,7 +19,7 @@ public interface IReportContract {
 
         void showAllQuestions( List<Questions> questionsList );
 
-        void showSuccessfullySendReport();
+        void showSuccessfullySendReport( int code );
     }
 
     interface Presenter {

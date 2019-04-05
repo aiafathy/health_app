@@ -28,4 +28,21 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/_9sdp"
         app:layout_constraintTop_toBottomOf="@id/title" />
+
+
+    <TextView
+        android:id="@+id/feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:fontFamily="@font/cairo_semibold"
+        android:text="feedback: "
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13ssp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recycler_visits_details" />
+
+
 </android.support.constraint.ConstraintLayout>

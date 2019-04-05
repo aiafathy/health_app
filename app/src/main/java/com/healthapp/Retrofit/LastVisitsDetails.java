@@ -3,49 +3,30 @@ package com.healthapp.Retrofit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class LastVisitsDetails {
-    @SerializedName("questions_id")
+    @SerializedName("data")
     @Expose
-    private Integer questionsId;
-    @SerializedName("name")
+    private List<LastVisitsDetailsList> data = null;
+    @SerializedName("feedBack")
     @Expose
-    private String name;
-    @SerializedName("answer")
-    @Expose
-    private String answer;
-    @SerializedName("total")
-    @Expose
-    private Integer total;
+    private String feedBack;
 
-    public Integer getQuestionsId() {
-        return questionsId;
+    public List<LastVisitsDetailsList> getData() {
+        return data;
     }
 
-    public void setQuestionsId( Integer questionsId ) {
-        this.questionsId = questionsId;
+    public void setData( List<LastVisitsDetailsList> data ) {
+        this.data = data;
     }
 
-    public String getName() {
-        return name;
+    public String getFeedBack() {
+        return feedBack;
     }
 
-    public void setName( String name ) {
-        this.name = name;
+    public void setFeedBack( String feedBack ) {
+        this.feedBack = feedBack;
     }
 
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer( String answer ) {
-        this.answer = answer;
-    }
-
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal( Integer total ) {
-        this.total = total;
-    }
 }

@@ -17,7 +17,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="supportsRtl">
-        <activity android:name=".ui.Login.LoginActivity">
+        <activity
+            android:name=".ui.Login.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,8 +27,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.HealthUnitDetails.HealthUnitDetails" />
-        <activity android:name=".ui.Reports.ReportsActivity" />
+        <activity
+            android:name=".ui.HealthUnitDetails.HealthUnitDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.Reports.ReportsActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".FCM.MyFirebaseInstanceService">
             <intent-filter>
