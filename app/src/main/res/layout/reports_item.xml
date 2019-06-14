@@ -4,124 +4,122 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/_6sdp"
-    android:layout_marginTop="@dimen/_8sdp"
-    android:layout_marginEnd="@dimen/_6sdp"
-    card_view:cardBackgroundColor="#81D4FA"
+    android:layout_height="match_parent"
     card_view:cardElevation="6dp"
     card_view:layout_constraintBottom_toBottomOf="@id/guideline"
     card_view:layout_constraintTop_toTopOf="parent">
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_12sdp">
+        android:layout_height="match_parent"
+        android:padding="@dimen/_6sdp"
+        android:background="@drawable/medical7"
+        >
 
         <TextView
             android:id="@+id/question"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_6sdp"
+            android:layout_above="@id/text_check"
+            android:layout_marginBottom="@dimen/_25sdp"
             android:fontFamily="@font/cairo_bold"
-            android:text="هل يوجد مطفأة حرائق"
+            android:gravity="center"
+            android:text="هل تم تسليم الدواء"
             android:textColor="@color/white"
-            android:textSize="@dimen/_11ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:textSize="@dimen/_16ssp" />
 
         <TextView
             android:id="@+id/text_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_toEndOf="@id/checkbox_yes"
             android:fontFamily="@font/cairo_bold"
             android:gravity="center"
-            android:text="نعم"
+            android:text="  نعم  "
             android:textColor="@color/white"
-            android:textSize="@dimen/_11ssp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/checkbox_yes"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkbox_yes"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_toEndOf="@id/text_no"
             android:background="@drawable/un_mark"
-            android:button="@android:color/transparent"
-            app:layout_constraintStart_toEndOf="@id/text_no"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:button="@android:color/transparent" />
 
         <TextView
             android:id="@+id/text_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_toEndOf="@id/checkbox_no"
             android:fontFamily="@font/cairo_bold"
-            android:text="  لا  "
+            android:text=" لا  "
             android:textColor="@color/white"
-            android:textSize="@dimen/_11ssp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/checkbox_no"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkbox_no"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:background="@drawable/un_mark"
-            android:button="@android:color/transparent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:button="@android:color/transparent" />
 
         <TextView
             android:id="@+id/text_no_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22sdp"
+            android:layout_below="@id/checkbox_no"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_42sdp"
             android:layout_marginEnd="@dimen/_9sdp"
             android:fontFamily="@font/cairo_bold"
+            android:gravity="center"
             android:text="من فضلك وضح السبب"
             android:textColor="@color/white"
-            android:textSize="@dimen/_11ssp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_no" />
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
 
 
         <RelativeLayout
             android:id="@+id/spinner_relativeType"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_26sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkbox_no"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_40sdp"
             android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_toStartOf="@id/text_no_answer"
             android:background="@drawable/background_edit"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@id/text_no_answer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_no">
+            android:paddingTop="@dimen/_4sdp"
+            android:visibility="gone">
 
             <Spinner
                 android:id="@+id/spinner_no_answer_details"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
                 android:background="@android:color/transparent"
+                android:dropDownVerticalOffset="30dp"
                 android:gravity="center"
-                android:spinnerMode="dropdown" />
+                android:paddingEnd="@dimen/_2sdp"
+                android:spinnerMode="dropdown"
+                android:textAlignment="center" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -133,6 +131,6 @@
                 android:src="@drawable/arrow" />
 
         </RelativeLayout>
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

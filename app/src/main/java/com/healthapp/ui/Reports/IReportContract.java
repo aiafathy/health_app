@@ -13,8 +13,6 @@ public interface IReportContract {
 
     interface View {
 
-        void showFormsType( List<FormTypes> formTypesList );
-
         void showNoDetailsList( List<NoDetails> noDetailsList );
 
         void showAllQuestions( List<Questions> questionsList );
@@ -23,8 +21,6 @@ public interface IReportContract {
     }
 
     interface Presenter {
-        void getFormsType();
-
         void getNoDetailsList();
 
         void getAllQuestions( int formId );

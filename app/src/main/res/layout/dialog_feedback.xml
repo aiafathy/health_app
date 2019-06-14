@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/view1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
 
         <RelativeLayout
             android:id="@+id/semi_trans"
@@ -60,6 +62,7 @@
         android:id="@+id/edit_feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/view1"
         android:layout_marginStart="@dimen/_6sdp"
         android:layout_marginEnd="@dimen/_6sdp"
         android:background="#e7e8e9"
@@ -78,12 +81,11 @@
 
     <Button
         android:id="@+id/okay"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_38sdp"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/_90sdp"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_below="@id/edit_feedback"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_90sdp"
         android:layout_marginBottom="@dimen/_12sdp"
         android:background="#18c9e9"
         android:fontFamily="@font/cairo_bold"
@@ -91,6 +93,6 @@
         android:paddingBottom="@dimen/_8sdp"
         android:text="ok"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_12ssp"
         android:textStyle="bold" />
-</LinearLayout>
+</RelativeLayout>

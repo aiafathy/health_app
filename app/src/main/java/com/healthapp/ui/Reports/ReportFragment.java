@@ -7,34 +7,28 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.healthapp.Prefs.PreferencesHelperImp;
 import com.healthapp.R;
 import com.healthapp.Retrofit.FeedBack;
 import com.healthapp.Retrofit.FormTypes;
 import com.healthapp.Retrofit.LocationModel;
 import com.healthapp.Retrofit.NoDetails;
 import com.healthapp.Retrofit.Questions;
+import com.healthapp.ui.DepthPageTransformer;
 import com.healthapp.ui.FeedbackDialog;
-import com.healthapp.ui.Login.LoginActivity;
-import com.healthapp.ui.Notification.NotificationFragment;
-import com.healthapp.ui.Profile.ProfileFragment.ProfileFragment;
 import com.reginald.editspinner.EditSpinner;
 
 import java.util.ArrayList;
@@ -42,16 +36,12 @@ import java.util.List;
 
 import static com.healthapp.Prefs.Constant.MY_PERMISSIONS_REQUEST_LOCATION;
 
-public class ReportFragment extends Fragment implements View.OnClickListener, IReportContract.View {
-    Toolbar toolbar;
-    ImageButton notification, profile, logout;
-    Button send;
+public class ReportFragment extends Fragment implements IReportContract.View {
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    TextView next;
+    ReportViewPagerAdapter reportViewPagerAdapter;
     CurrentLocation currentLocation;
-    ReportAdapter reportAdapter;
-    RecyclerView questionRecyclerView;
-    EditSpinner formsTypeSpinner;
-    List<String> formsTypeListStrings;
-    List<FormTypes> formsTypeList;
     List<String> noDetailsListStrings;
     List<NoDetails> noDetailsList;
     List<String> questionsListStrings;
@@ -60,11 +50,17 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
     List<FeedBack> feedBackList;
     FeedbackDialog feedbackDialog;
     List<LocationModel> locationModelList;
+    int idFormType;
 
     @Nullable
     @Override
     public View onCreateView( @NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
-        return inflater.inflate(R.layout.fragment_report, container, false);
+        View view = inflater.inflate(R.layout.fragment_report, container, false);
+
+        Bundle bundle = getArguments();
+        idFormType = bundle.getInt("id_form_type", 0);
+        Log.i("id_form_type", ": " + idFormType);
+        return view;
     }
 
     @Override
@@ -80,77 +76,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
     }
 
     private void setListeners() {
-        notification.setOnClickListener(this);
-        profile.setOnClickListener(this);
-        logout.setOnClickListener(this);
-        send.setOnClickListener(this);
-
-        formsTypeSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick( AdapterView<?> adapterView, View view, int i, long l ) {
-                int idFormType = formsTypeList.get(i).getId();
-                if (noDetailsList.size() > 0)
-                    reportPresenterImp.getAllQuestions(idFormType);
-            }
-        });
-
-        formsTypeSpinner.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch( View view, MotionEvent event ) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    if (formsTypeList.size() == 0)
-                        reportPresenterImp.getFormsType();
-                }
-                return false;
-            }
-        });
-    }
-
-    private void createInstance() {
-        formsTypeList = new ArrayList<>();
-        formsTypeListStrings = new ArrayList<>();
-        questionsList = new ArrayList<>();
-        noDetailsList = new ArrayList<>();
-        feedBackList = new ArrayList<>();
-        noDetailsListStrings = new ArrayList<>();
-        questionsListStrings = new ArrayList<>();
-        locationModelList = new ArrayList<>();
-        currentLocation = new CurrentLocation(getActivity());
-        reportPresenterImp = new ReportPresenterImp(this, getActivity());
-        reportPresenterImp.getNoDetailsList();
-        reportPresenterImp.getFormsType();
-    }
-
-    private void initiViews( View view ) {
-        toolbar = view.findViewById(R.id.tool_bar);
-        notification = view.findViewById(R.id.notification);
-        profile = view.findViewById(R.id.profile);
-        logout = view.findViewById(R.id.logout);
-        send = view.findViewById(R.id.button_send);
-        formsTypeSpinner = view.findViewById(R.id.spinner_report_type);
-        questionRecyclerView = view.findViewById(R.id.recycler_reports);
-
-    }
-
-    @Override
-    public void onClick( View view ) {
-        switch (view.getId()) {
-            case R.id.notification:
-                addFragment(new NotificationFragment());
-                break;
-
-            case R.id.logout:
-                PreferencesHelperImp.getInstance().removeAllValues();
-                getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
-                break;
-
-            case R.id.profile:
-                addFragment(new ProfileFragment());
-                break;
-
-            case R.id.button_send:
-                if (reportAdapter.isAllQuestionsIsAnswered()) {
+            public void onClick( View view ) {
+                if (reportViewPagerAdapter.isAllQuestionsIsAnswered()) {
                     currentLocation.connectGPS();
                     if (currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
                         showFeedBack();
@@ -173,7 +102,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
                                 locationModel.setLang(String.valueOf(currentLocation.getLongitude()));
                                 locationModel.setLat(String.valueOf(currentLocation.getLatitude()));
                                 locationModelList.add(locationModel);
-                                reportPresenterImp.sendReport(reportAdapter.getAnswers(), locationModelList, feedBackList);
+                                reportPresenterImp.sendReport(reportViewPagerAdapter.getAnswers(), locationModelList, feedBackList);
 
                             }
                         });
@@ -185,9 +114,29 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
                 } else
                     Toast.makeText(getActivity(), "من فضلك أجب علي كل الاسئلة", Toast.LENGTH_SHORT).show();
 
-                break;
-        }
 
+            }
+        });
+    }
+
+    private void createInstance() {
+        questionsList = new ArrayList<>();
+        noDetailsList = new ArrayList<>();
+        feedBackList = new ArrayList<>();
+        noDetailsListStrings = new ArrayList<>();
+        questionsListStrings = new ArrayList<>();
+        locationModelList = new ArrayList<>();
+        currentLocation = new CurrentLocation(getActivity());
+        reportPresenterImp = new ReportPresenterImp(this, getActivity());
+        reportViewPagerAdapter = new ReportViewPagerAdapter(getActivity());
+        reportPresenterImp.getNoDetailsList();
+        reportPresenterImp.getAllQuestions(idFormType);
+    }
+
+    private void initiViews( View view ) {
+        next = view.findViewById(R.id.next);
+        tabLayout = view.findViewById(R.id.tabLayout);
+        viewPager = view.findViewById(R.id.viewPager);
     }
 
     private void showFeedBack() {
@@ -239,29 +188,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
     }
 
     @Override
-    public void showFormsType( List<FormTypes> formsTypesList ) {
-        // to clear list when user try to get data again
-        this.formsTypeList.clear();
-        this.formsTypeListStrings.clear();
-
-        this.formsTypeList = formsTypesList;
-        for (int i = 0; i < formsTypesList.size(); i++) {
-            formsTypeListStrings.add(formsTypesList.get(i).getName());
-        }
-
-        ArrayAdapter<String> reportsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, formsTypeListStrings);
-        formsTypeSpinner.setAdapter(reportsAdapter);
-
-    }
-
-    @Override
     public void showNoDetailsList( List<NoDetails> noDetailsList ) {
         this.noDetailsList = noDetailsList;
-        reportAdapter = new ReportAdapter(noDetailsList, getActivity());
+        reportViewPagerAdapter.setNoAnswersList(noDetailsList);
     }
 
     @Override
     public void showAllQuestions( List<Questions> questionsList ) {
+
         // to clear list when user try to get data again
         this.questionsList.clear();
 
@@ -270,10 +204,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener, IR
             questionsListStrings.add(questionsList.get(i).getName());
         }
 
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        questionRecyclerView.setLayoutManager(manager);
-        reportAdapter.setQuestionsList(questionsList);
-        questionRecyclerView.setAdapter(reportAdapter);
+        reportViewPagerAdapter.setQuestionsList(questionsList);
+        viewPager.setAdapter(reportViewPagerAdapter);
+        viewPager.setPageTransformer(true, new DepthPageTransformer());
+        tabLayout.setupWithViewPager(viewPager, true);
+        viewPager.setOffscreenPageLimit(questionsList.size());
+
     }
 
     @Override

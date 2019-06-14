@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ghostwhite"
+    tools:context="com.healthapp.ui.Reports.ReportsActivity">
+
+
+    <TextView
+        android:id="@+id/text_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_160sdp"
+        android:fontFamily="@font/cairo_bold"
+        android:gravity="center"
+        android:padding="@dimen/_4sdp"
+        android:text="من فضلك حدد نوع التقرير أولا "
+        android:textColor="@color/greenblue"
+        android:textSize="@dimen/_16ssp" />
+
+    <TextView
+        android:id="@+id/type_report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_description"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:fontFamily="@font/cairo_bold"
+        android:text="نوع التقرير"
+        android:textColor="@color/greenblue"
+        android:textSize="@dimen/_12ssp" />
+
+    <com.reginald.editspinner.EditSpinner
+        android:id="@+id/spinner_report_type"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_26sdp"
+        android:layout_below="@id/text_description"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_28sdp"
+        android:background="@drawable/background_edit"
+        android:drawableStart="@drawable/arrow"
+        android:editable="false"
+        android:fontFamily="@font/cairo_bold"
+        android:hint="نوع التقرير هنا "
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_8sdp"
+        android:textColor="@color/greenblue"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"
+        app:dropDownDrawableHeight="@dimen/_6sdp"
+        app:dropDownDrawableSpacing="@dimen/_15sdp"
+        app:dropDownDrawableWidth="@dimen/_10sdp" />
+
+    <TextView
+        android:id="@+id/next_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/_22sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:fontFamily="@font/cairo_bold"
+        android:text="التالي"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/_15ssp"
+        android:visibility="gone" />
+</RelativeLayout>

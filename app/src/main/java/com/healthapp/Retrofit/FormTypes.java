@@ -4,6 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class FormTypes {
+    public FormTypes( Integer id, String name, String slug, String createdAt, String updatedAt ) {
+        this.id = id;
+        this.name = name;
+        this.slug = slug;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     @SerializedName("id")
     @Expose

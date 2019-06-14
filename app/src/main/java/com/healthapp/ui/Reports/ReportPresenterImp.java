@@ -40,32 +40,6 @@ public class ReportPresenterImp implements IReportContract.Presenter {
     }
 
     @Override
-    public void getFormsType() {
-        LoadingDialog.showProgress(context);
-        ApiInterface apiInterface = RetrofitInstance.getRetrofit().create(ApiInterface.class);
-        Call<FormTypesModel> call = apiInterface.getAllFormTypes();
-        call.enqueue(new Callback<FormTypesModel>() {
-            @Override
-            public void onResponse( Call<FormTypesModel> call, Response<FormTypesModel> response ) {
-                LoadingDialog.hideProgress();
-                if (response.isSuccessful()) {
-                    FormTypesModel formTypesModel = response.body();
-                    if (formTypesModel.getResponse().size() > 0)
-                        mView.showFormsType(formTypesModel.getResponse());
-
-                }
-            }
-
-            @Override
-            public void onFailure( Call<FormTypesModel> call, Throwable t ) {
-                LoadingDialog.hideProgress();
-                Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    @Override
     public void getNoDetailsList() {
         ApiInterface apiInterface = RetrofitInstance.getRetrofit().create(ApiInterface.class);
         Call<NoDetailsModel> call = apiInterface.getNoDetailsList();
@@ -97,7 +71,7 @@ public class ReportPresenterImp implements IReportContract.Presenter {
                 LoadingDialog.hideProgress();
                 if (response.isSuccessful()) {
                     QuestionModel questionModel = response.body();
-                    if (questionModel.getResponse().size() > 0)
+                    if (questionModel.getResponse().size() > 0 && questionModel.getResponse() != null)
                         mView.showAllQuestions(questionModel.getResponse());
                 }
             }

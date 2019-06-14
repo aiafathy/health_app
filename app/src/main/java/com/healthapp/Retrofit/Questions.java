@@ -4,6 +4,15 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Questions {
+
+    public Questions( Integer id, String name, Integer formsId, String createdAt, String updatedAt ) {
+        this.id = id;
+        this.name = name;
+        this.formsId = formsId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     @SerializedName("id")
     @Expose
     private Integer id;

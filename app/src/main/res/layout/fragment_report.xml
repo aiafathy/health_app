@@ -7,137 +7,37 @@
     android:background="@color/ghostwhite"
     tools:context="com.healthapp.ui.Reports.ReportsActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_38sdp"
-        android:layout_alignParentTop="true"
-        android:background="@color/white"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp">
+        android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_14sdp"
-            android:layout_marginEnd="@dimen/_14sdp"
-            android:weightSum="1">
+    <TextView
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:fontFamily="@font/cairo_bold"
+        android:text="send"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/_16ssp" />
 
-            <ImageButton
-                android:id="@+id/logout"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.1"
-                android:background="@android:color/transparent"
-                android:src="@drawable/logout" />
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="@dimen/_190sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_6sdp"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabIndicatorHeight="0dp"
+        app:tabPadding="0dp" />
 
-            <ImageButton
-                android:id="@+id/profile"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_18sdp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_weight="0.2"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/profile" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight=".6"
-                android:fontFamily="@font/cairo_regular"
-                android:gravity="center"
-                android:text="            التقرير"
-                android:textColor="@color/greenblue"
-                android:textSize="@dimen/_16sdp" />
-
-
-            <ImageButton
-                android:id="@+id/notification"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_18sdp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.1"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/notification" />
-        </LinearLayout>
-    </android.support.v7.widget.Toolbar>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/button_send"
-        android:layout_below="@id/tool_bar">
-
-        <TextView
-            android:id="@+id/text_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:fontFamily="@font/cairo_bold"
-            android:gravity="center"
-            android:padding="@dimen/_4sdp"
-            android:text="من فضلك حدد نوع التقرير أولا "
-            android:textColor="@color/greenblue"
-            android:textSize="@dimen/_11ssp" />
-
-        <TextView
-            android:id="@+id/type_report"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_description"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:fontFamily="@font/cairo_bold"
-            android:text="نوع التقرير"
-            android:textColor="@color/greenblue"
-            android:textSize="@dimen/_11ssp" />
-
-        <com.reginald.editspinner.EditSpinner
-            android:id="@+id/spinner_report_type"
-            android:layout_width="@dimen/_180sdp"
-            android:layout_height="@dimen/_26sdp"
-            android:layout_below="@id/text_description"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:background="@drawable/background_edit"
-            android:drawableStart="@drawable/arrow"
-            android:editable="false"
-            android:fontFamily="@font/cairo_bold"
-            android:hint="نوع التقرير هنا "
-            android:paddingStart="@dimen/_6sdp"
-            android:paddingEnd="@dimen/_8sdp"
-            android:textColor="@color/greenblue"
-            android:textSize="@dimen/_12sdp"
-            android:textStyle="bold"
-            app:dropDownDrawableHeight="@dimen/_6sdp"
-            app:dropDownDrawableSpacing="@dimen/_15sdp"
-            app:dropDownDrawableWidth="@dimen/_10sdp" />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_reports"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinner_report_type"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/_2sdp" />
-
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/button_send"
+    <!--    android:id="@+id/button_send"
         android:layout_width="@dimen/_230sdp"
         android:layout_height="@dimen/_38sdp"
         android:layout_alignParentBottom="true"
@@ -151,5 +51,6 @@
         android:text="send"
         android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" -->
 </RelativeLayout>
