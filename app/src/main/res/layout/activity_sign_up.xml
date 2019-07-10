@@ -10,10 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <com.reginald.editspinner.EditSpinner
-        android:id="@+id/edit_email"
+        android:id="@+id/sign_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_38sdp"
         android:layout_marginStart="@dimen/_16sdp"
@@ -21,8 +21,8 @@
         android:background="@drawable/background_edit"
         android:fontFamily="@font/cairo_bold"
         android:gravity="center"
-        android:hint="البريد الالكتروني للمستخدم"
-        android:inputType="textEmailAddress"
+        android:hint="الإسم"
+        android:inputType="textPersonName"
         android:maxLines="1"
         android:padding="@dimen/_8sdp"
         android:textColor="@color/greenblue"
@@ -33,7 +33,50 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
     <com.reginald.editspinner.EditSpinner
-        android:id="@+id/edit_pass"
+        android:id="@+id/sign_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_38sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+
+        android:background="@drawable/background_edit"
+        android:fontFamily="@font/cairo_bold"
+        android:gravity="center"
+        android:hint="رقم الموبايل"
+        android:inputType="phone"
+        android:maxLines="1"
+        android:padding="@dimen/_8sdp"
+        android:textColor="@color/greenblue"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_name" />
+
+    <com.reginald.editspinner.EditSpinner
+        android:id="@+id/sign_email"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_38sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:background="@drawable/background_edit"
+        android:fontFamily="@font/cairo_bold"
+        android:gravity="center"
+        android:hint="البريد الالكتروني "
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:padding="@dimen/_8sdp"
+        android:textColor="@color/greenblue"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_mobile" />
+
+    <com.reginald.editspinner.EditSpinner
+        android:id="@+id/sign_pass"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_38sdp"
         android:layout_marginStart="@dimen/_16sdp"
@@ -50,46 +93,24 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_email" />
+        app:layout_constraintTop_toBottomOf="@id/sign_email" />
 
     <Button
-        android:id="@+id/button_login"
+        android:id="@+id/button_signup"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_38sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginBottom="144dp"
+        android:layout_marginBottom="@dimen/_60sdp"
         android:background="@drawable/background_next"
         android:fontFamily="@font/cairo_bold"
         android:gravity="center"
         android:paddingBottom="@dimen/_8sdp"
-        android:text="دخول"
+        android:text="تسجيل"
         android:textColor="@color/white"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/sign_up_textView"
-
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_38sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginBottom="52dp"
-        android:background="@drawable/background_next"
-        android:fontFamily="@font/cairo_bold"
-        android:gravity="center"
-        android:paddingBottom="@dimen/_8sdp"
-        android:text="تسجيل جديد"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_16ssp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

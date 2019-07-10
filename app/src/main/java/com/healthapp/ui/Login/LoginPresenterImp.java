@@ -21,13 +21,13 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
     ILoginContract.View mView;
     Context context;
 
-    public LoginPresenterImp( ILoginContract.View mView, Context context ) {
+    public LoginPresenterImp(ILoginContract.View mView, Context context) {
         this.mView = mView;
         this.context = context;
     }
 
     @Override
-    public void login( String email, String pass, String device_token ) {
+    public void login(String email, String pass, String device_token) {
         LoadingDialog.showProgress(context);
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://81.21.105.203:8080/health/api/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -36,7 +36,7 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
         Call<JsonObject> call = apiInterface.loginUser(email, pass, device_token);
         call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse( Call<JsonObject> call, Response<JsonObject> response ) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 LoadingDialog.hideProgress();
                 if (response.isSuccessful()) {
                     String token = response.body().get("token").toString().replace("\"", "");
@@ -47,7 +47,7 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
             }
 
             @Override
-            public void onFailure( Call<JsonObject> call, Throwable t ) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 LoadingDialog.hideProgress();
                 Toast.makeText(context, "من فضلك تحقق من اتصالك بالانترنت", Toast.LENGTH_SHORT).show();
             }
@@ -55,5 +55,8 @@ public class LoginPresenterImp implements ILoginContract.Presenter {
         });
     }
 
-
+    @Override
+    public void goToSignUp() {
+        mView.goToSignUp();
+    }
 }
